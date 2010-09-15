@@ -151,7 +151,7 @@ for s = 1, screen.count() do
         obvious.battery(),
         s == 1 and mysystray or nil,
         obvious.basic_mpd(),
-        obvious.volume_alsa(0, "PCM"),
+        obvious.volume_alsa(0, "Master"),
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
@@ -213,9 +213,9 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
     -- sound & brightness
-    awful.key({ modkey }, "F3", function () obvious.volume_alsa.mute(0, "PCM") end),
-    awful.key({ modkey }, "F4", function () obvious.volume_alsa.lower(0, "PCM", 5) end),
-    awful.key({ modkey }, "F5", function () obvious.volume_alsa.raise(0, "PCM", 5) end),
+    awful.key({ modkey }, "F3", function () obvious.volume_alsa.mute(0, "Master") end),
+    awful.key({ modkey }, "F4", function () obvious.volume_alsa.lower(0, "Master", 5) end),
+    awful.key({ modkey }, "F5", function () obvious.volume_alsa.raise(0, "Master", 5) end),
     awful.key({ modkey }, "F8", function () spawn("brightness down") end),
     awful.key({ modkey }, "F9", function () spawn("brightness up") end),
 
