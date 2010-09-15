@@ -7,22 +7,23 @@ require("beautiful")
 -- Notification library
 require("naughty")
 
+-- Obvious widgets
+require("obvious.volume_alsa")
+require("obvious.basic_mpd")
+require("obvious.battery")
+
 local spawn = awful.util.spawn
+local home  = os.getenv("HOME")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init("/home/andrew/.config/awesome/theme.lua")
+beautiful.init(home .. "/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
-editor = os.getenv("EDITOR") or "vim"
-editor_cmd = terminal .. " -e " .. editor
+local terminal   = "urxvt"
+local editor     = os.getenv("EDITOR") or "vim"
+local editor_cmd = terminal .. " -e " .. editor
 
--- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -147,7 +148,10 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
+        obvious.battery(),
         s == 1 and mysystray or nil,
+        obvious.basic_mpd(),
+        obvious.volume_alsa(0, "PCM"),
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
@@ -209,9 +213,9 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
     -- sound & brightness
-    awful.key({ modkey }, "F3", function () spawn("amixer set 'Master' toggle") end),
-    awful.key({ modkey }, "F4", function () spawn("sound 5-") end),
-    awful.key({ modkey }, "F5", function () spawn("sound 5+") end),
+    awful.key({ modkey }, "F3", function () obvious.volume_alsa.mute(0, "PCM") end),
+    awful.key({ modkey }, "F4", function () obvious.volume_alsa.lower(0, "PCM", 5) end),
+    awful.key({ modkey }, "F5", function () obvious.volume_alsa.raise(0, "PCM", 5) end),
     awful.key({ modkey }, "F8", function () spawn("brightness down") end),
     awful.key({ modkey }, "F9", function () spawn("brightness up") end),
 
@@ -332,17 +336,6 @@ awful.rules.rules = {
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 client.add_signal("manage", function (c, startup)
-    -- Add a titlebar
-    -- awful.titlebar.add(c, { modkey = modkey })
-
-    -- Enable sloppy focus
-    c:add_signal("mouse::enter", function(c)
-        if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-            and awful.client.focus.filter(c) then
-            client.focus = c
-        end
-    end)
-
     if not startup then
         -- Set the windows at the slave,
         -- i.e. put it at the end of others instead of setting it master.
@@ -356,6 +349,6 @@ client.add_signal("manage", function (c, startup)
     end
 end)
 
-client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.add_signal("focus",   function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
