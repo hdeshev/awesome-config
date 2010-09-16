@@ -1,5 +1,6 @@
 -- Standard awesome library
 require("awful")
+require("awful.autofocus")
 require("awful.rules")
 -- Theme handling library
 require("beautiful")
@@ -15,9 +16,6 @@ require("obvious.battery")
 require("vicious")
 
 -- {{{ Variable definitions
--- Themes define colours, icons, and wallpapers
-beautiful.init(home .. "/.config/awesome/theme.lua")
-
 local spawn      = awful.util.spawn
 
 local terminal   = "urxvt"
@@ -27,6 +25,9 @@ local home       = os.getenv("HOME")
 local editor     = os.getenv("EDITOR") or "vim"
 
 local editor_cmd = terminal .. " -e " .. editor
+
+-- Themes define colours, icons, and wallpapers
+beautiful.init(home .. "/.config/awesome/theme.lua")
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
