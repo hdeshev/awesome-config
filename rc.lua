@@ -1,6 +1,5 @@
 -- Standard awesome library
 require("awful")
-require("awful.autofocus")
 require("awful.rules")
 -- Theme handling library
 require("beautiful")
@@ -12,35 +11,28 @@ require("obvious.volume_alsa")
 require("obvious.basic_mpd")
 require("obvious.battery")
 
-local spawn = awful.util.spawn
-local home  = os.getenv("HOME")
+-- Vicious widgets
+require("vicious")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 beautiful.init(home .. "/.config/awesome/theme.lua")
 
--- This is used later as the default terminal and editor to run.
-local terminal   = "urxvt"
-local editor     = os.getenv("EDITOR") or "vim"
-local editor_cmd = terminal .. " -e " .. editor
+local spawn      = awful.util.spawn
 
-modkey = "Mod1"
+local terminal   = "urxvt"
+local modkey     = "Mod1"
+
+local home       = os.getenv("HOME")
+local editor     = os.getenv("EDITOR") or "vim"
+
+local editor_cmd = terminal .. " -e " .. editor
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
     awful.layout.suit.tile.bottom,
     awful.layout.suit.max,
---    awful.layout.suit.floating,
---    awful.layout.suit.tile,
---    awful.layout.suit.tile.left,
---    awful.layout.suit.tile.top,
---    awful.layout.suit.fair,
---    awful.layout.suit.fair.horizontal,
---    awful.layout.suit.spiral,
---    awful.layout.suit.spiral.dwindle,
---    awful.layout.suit.max.fullscreen,
---    awful.layout.suit.magnifier
 }
 -- }}}
 
@@ -74,6 +66,13 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" })
+
+-- Gmail widget
+gmail = widget({ type = "textbox" })
+vicious.register(gmail, vicious.widgets.gmail, '<span color="#CC9393">[Mail: ${count}]</span>', 60)
+-- MPD widget
+mpd = widget({ type = "textbox" })
+vicious.register(mpd, vicious.widgets.mpd, '${Title}')
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
@@ -150,7 +149,8 @@ for s = 1, screen.count() do
         mytextclock,
         obvious.battery(),
         s == 1 and mysystray or nil,
-        obvious.basic_mpd(),
+        mpd,
+        gmail,
         obvious.volume_alsa(0, "Master"),
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
