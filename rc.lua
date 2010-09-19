@@ -16,13 +16,13 @@ require("obvious.battery")
 require("vicious")
 
 -- {{{ Variable definitions
-local spawn      = awful.util.spawn
+local spawn = awful.util.spawn
 
-local terminal   = "urxvt"
-local modkey     = "Mod1"
+local terminal = "urxvt"
+local modkey   = "Mod1"
 
-local home       = os.getenv("HOME")
-local editor     = os.getenv("EDITOR") or "vim"
+local home   = os.getenv("HOME")
+local editor = os.getenv("EDITOR") or "vim"
 
 local editor_cmd = terminal .. " -e " .. editor
 
@@ -30,8 +30,7 @@ local editor_cmd = terminal .. " -e " .. editor
 beautiful.init(home .. "/.config/awesome/theme.lua")
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
-layouts =
-{
+layouts = {
     awful.layout.suit.tile.bottom,
     awful.layout.suit.max,
 }
@@ -69,11 +68,15 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 mytextclock = awful.widget.textclock({ align = "right" })
 
 -- Gmail widget
-gmail = widget({ type = "textbox" })
-vicious.register(gmail, vicious.widgets.gmail, '<span color="#CC9393">[Mail: ${count}]</span>', 60)
+gmail = widget { type = "textbox" }
+vicious.register(gmail, vicious.widgets.gmail, '[Mail: ${count}]', 60)
 -- MPD widget
-mpd = widget({ type = "textbox" })
+mpd = widget { type = "textbox" }
 vicious.register(mpd, vicious.widgets.mpd, '${Title}')
+
+-- Separator
+separator = widget { type = "textbox" }
+separator.text = '<span color="#ee1111"> :: </span>'
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
@@ -148,9 +151,13 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
+        separator,
         obvious.battery(),
+        separator,
         s == 1 and mysystray or nil,
+        separator,
         mpd,
+        separator,
         gmail,
         obvious.volume_alsa(0, "Master"),
         mytasklist[s],
