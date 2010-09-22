@@ -15,14 +15,17 @@ require("obvious.battery")
 -- Vicious widgets
 require("vicious")
 
+require ("lib.ror")
+local run_or_raise = lib.ror.run_or_raise
+
 -- {{{ Variable definitions
-local spawn = awful.util.spawn
+local spawn      = awful.util.spawn
 
-local terminal = "urxvt"
-local modkey   = "Mod1"
+local terminal   = "urxvt"
+local modkey     = "Mod1"
 
-local home   = os.getenv("HOME")
-local editor = os.getenv("EDITOR") or "vim"
+local home       = os.getenv("HOME")
+local editor     = os.getenv("EDITOR") or "vim"
 
 local editor_cmd = terminal .. " -e " .. editor
 
@@ -30,7 +33,8 @@ local editor_cmd = terminal .. " -e " .. editor
 beautiful.init(home .. "/.config/awesome/theme.lua")
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
-layouts = {
+layouts =
+{
     awful.layout.suit.tile.bottom,
     awful.layout.suit.max,
 }
@@ -155,7 +159,6 @@ for s = 1, screen.count() do
         obvious.battery(),
         separator,
         s == 1 and mysystray or nil,
-        separator,
         mpd,
         separator,
         gmail,
@@ -237,7 +240,10 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift" }, "p", function () spawn("gmrun") end),
 
     -- quick spawning
-    awful.key({ modkey, "Shift" }, "f", function () spawn("firefox") end),
+    -- awful.key({ modkey, "Shift" }, "f", function () spawn("firefox") end),
+
+    awful.key({ modkey, "Shift" }, "f", function () run_or_raise("firefox", { class = "Namoroka" }) end),
+
     awful.key({ modkey, "Shift" }, "m", function () spawn("firefox gmail.com") end),
     awful.key({ modkey, "Shift" }, "t", function () spawn("thunar") end),
 
