@@ -73,12 +73,40 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" })
 
+function colorize(color, string)
+  return '<span color="'..color..'">'..string..'</span>'
+end
+
 -- Gmail widget
 gmail = widget { type = "textbox" }
-vicious.register(gmail, vicious.widgets.gmail, '[Mail: ${count}]', 60)
+vicious.register(gmail, vicious.widgets.gmail, function(w, args)
+  count = args['{count}']
+
+  if count > 0 then
+    return colorize('#ff0000', '[Mail: '..count..']')
+  else
+    return ''
+  end
+end,
+60)
+
 -- MPD widget
 mpd = widget { type = "textbox" }
-vicious.register(mpd, vicious.widgets.mpd, '${Title}')
+vicious.register(mpd, vicious.widgets.mpd, function(w, args)
+  state = args['{state}']
+
+  if state == "Stop" then
+    return colorize('#ff0000', '--')
+  else
+    if state == "Pause" then
+      state_string = colorize('#009000', '||')
+    else
+      state_string = colorize('#009000', '>')
+    end
+
+    return "Playing: "..args['{Title}'].." "..state_string
+  end
+end)
 
 -- Separator
 separator = widget { type = "textbox" }
@@ -161,6 +189,7 @@ for s = 1, screen.count() do
         obvious.battery(),
         separator,
         s == 1 and mysystray or nil,
+        separator,
         mpd,
         separator,
         gmail,
