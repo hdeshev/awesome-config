@@ -18,6 +18,8 @@ require("vicious")
 require ("lib.ror")
 local run_or_raise = lib.ror.run_or_raise
 
+require("revelation")
+
 -- {{{ Variable definitions
 local spawn      = awful.util.spawn
 
@@ -252,6 +254,8 @@ globalkeys = awful.util.table.join(
 
     -- screengrabbing
     awful.key({ modkey }, "F12", function () spawn("scrot -e 'mv $f /home/andrew/images/shots/'") end),
+
+    awful.key({ modkey }, "e", revelation.revelation),
 
     awful.key({ modkey }, "x",
               function ()
