@@ -15,8 +15,8 @@ require("obvious.battery")
 -- Vicious widgets
 require("vicious")
 
-require ("lib.ror")
-local run_or_raise = lib.ror.run_or_raise
+require ("lib.summon")
+local summon = lib.summon.summon
 
 require("revelation")
 
@@ -99,9 +99,9 @@ vicious.register(mpd, vicious.widgets.mpd, function(w, args)
     return colorize('#ff0000', '--')
   else
     if state == "Pause" then
-      state_string = colorize('#009000', '||')
+      state_string = colorize('#ff0000', '||')
     else
-      state_string = colorize('#009000', '>')
+      state_string = colorize('#ff0000', '>')
     end
 
     return "Playing: "..args['{Title}'].." "..state_string
@@ -273,7 +273,7 @@ globalkeys = awful.util.table.join(
     -- quick spawning
     -- awful.key({ modkey, "Shift" }, "f", function () spawn("firefox") end),
 
-    awful.key({ modkey, "Shift" }, "f", function () run_or_raise("firefox", { class = "Namoroka" }) end),
+    awful.key({ modkey, "Shift" }, "f", function () summon("firefox", { class = "Namoroka" }) end),
 
     awful.key({ modkey, "Shift" }, "m", function () spawn("firefox gmail.com") end),
     awful.key({ modkey, "Shift" }, "t", function () spawn("thunar") end),

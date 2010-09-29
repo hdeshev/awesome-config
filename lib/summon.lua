@@ -6,9 +6,9 @@ local table = table
 local awful  = awful
 local client = client
 
-module("lib.ror")
+module("lib.summon")
 
-function run_or_raise(cmd, properties)
+function summon(cmd, properties)
   local clients         = client.get()
   local focused         = awful.client.next(0)
   local findex          = 0
@@ -32,15 +32,11 @@ function run_or_raise(cmd, properties)
     if 0 < findex and findex < n then
       c = matched_clients[findex+1]
     end
+
     local ctags = c:tags()
-    if table.getn(ctags) == 0 then
-      -- ctags is empty, show client on current tag
-      local curtag = awful.tag.selected()
-      awful.client.movetotag(curtag, c)
-    else
-      -- Otherwise, pop to first tag client is visible on
-      awful.tag.viewonly(ctags[1])
-    end
+    local curtag = awful.tag.selected()
+    awful.client.movetotag(curtag, c)
+
     -- And then focus the client
     client.focus = c
     c:raise()
