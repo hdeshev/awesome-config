@@ -96,12 +96,12 @@ vicious.register(mpd, vicious.widgets.mpd, function(w, args)
   state = args['{state}']
 
   if state == "Stop" then
-    return colorize('#ff0000', '--')
+    return colorize('#009000', '--')
   else
     if state == "Pause" then
-      state_string = colorize('#ff0000', '||')
+      state_string = colorize('#009000', '||')
     else
-      state_string = colorize('#ff0000', '>')
+      state_string = colorize('#009000', '>')
     end
 
     return "Playing: "..args['{Title}'].." "..state_string
