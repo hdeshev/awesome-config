@@ -284,7 +284,7 @@ global_keys = awful.util.table.join(
   end)
 )
 
-clientkeys = awful.util.table.join(
+client_keys = awful.util.table.join(
   awful.key({ modkey, },           "f",      function (c) c.fullscreen = not c.fullscreen  end),
   awful.key({ modkey, "Shift" },   "c",      function (c) c:kill()                         end),
   awful.key({ modkey, },           "t",      awful.client.floating.toggle                     ),
@@ -353,8 +353,8 @@ awful.rules.rules = {
       border_width = beautiful.border_width,
       border_color = beautiful.border_normal,
       focus = true,
-      keys = clientkeys,
-      buttons = clientbuttons
+      keys = client_keys,
+      buttons = client_buttons
     }
   },
 
