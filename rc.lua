@@ -266,8 +266,8 @@ global_keys = awful.util.table.join(
   awful.key({ modkey, "Shift" }, "p", function () spawn("gmrun")                end),
 
   -- applications
-  awful.key({ modkey, "Shift" }, "f", function () summon("firefox", { class = "Namoroka" }) end),
-  awful.key({ modkey, "Shift" }, "m", function () spawn("firefox gmail.com") end),
+  awful.key({ modkey, "Shift" }, "f", function () summon("firefox-beta-bin", { class = "Firefox" }) end),
+  awful.key({ modkey, "Shift" }, "m", function () spawn("firefox-beta-bin gmail.com") end),
   awful.key({ modkey, "Shift" }, "t", function () spawn("thunar") end),
 
   -- pixel-grabbing
