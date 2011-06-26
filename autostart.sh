@@ -4,6 +4,8 @@ setxkbmap us,bg ,phonetic grp:toggle,grp_led:scroll
 setxkbmap -option ctrl:nocaps
 # increase mouse speed and acceleration
 xset m 4 1
+# make sure you run xscreensaver (with splash) and configure it first
+xscreensaver -no-splash &
 
 dropbox start -i &
 keepassx /home/hristo/.keepassx/deshev.kdb &
