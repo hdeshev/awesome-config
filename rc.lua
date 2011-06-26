@@ -232,7 +232,9 @@ global_keys = awful.util.table.join(
   end),
 
   -- Standard program
-  awful.key({ modkey, },           "Return", function () spawn(terminal) end), awful.key({ modkey, },           "q",      awesome.restart), awful.key({ modkey, "Shift"   }, "q",      awesome.quit),
+  awful.key({ modkey, },           "Return", function () spawn(terminal) end),
+  --awful.key({ modkey, },           "q",      awesome.restart),
+  --awful.key({ modkey, "Shift"   }, "q",      awesome.quit),
 
   awful.key({ modkey, },           "l",     function () awful.tag.incmwfact( 0.05)    end),
   awful.key({ modkey, },           "h",     function () awful.tag.incmwfact(-0.05)    end),
@@ -244,9 +246,9 @@ global_keys = awful.util.table.join(
   awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
   -- sound & brightness
-  awful.key({ modkey }, "F3", function () obvious.volume_alsa.mute(0, "Master")     end),
-  awful.key({ modkey }, "F4", function () obvious.volume_alsa.lower(0, "Master", 5) end),
-  awful.key({ modkey }, "F5", function () obvious.volume_alsa.raise(0, "Master", 5) end),
+  awful.key({}, "XF86AudioMute", function () obvious.volume_alsa.mute(0, "Master")     end),
+  awful.key({}, "XF86AudioLowerVolume", function () obvious.volume_alsa.lower(0, "Master", 5) end),
+  awful.key({}, "XF86AudioRaiseVolume", function () obvious.volume_alsa.raise(0, "Master", 5) end),
   awful.key({ modkey }, "F8", function () spawn("brightness down")                  end),
   awful.key({ modkey }, "F9", function () spawn("brightness up")                    end),
 
@@ -386,4 +388,4 @@ end)
 client.add_signal("focus",   function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
-awful.util.spawn(home .. "/.config/awesome/autostart.sh")
+awful.util.spawn(home .. "/.config/awesome/autostart.sh", false)
