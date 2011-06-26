@@ -7,10 +7,13 @@ require("beautiful")
 -- Notification library
 require("naughty")
 
+-- Load Debian menu entries
+require("debian.menu")
+
 -- Obvious widgets
 require("obvious.volume_alsa")
 require("obvious.basic_mpd")
-require("obvious.battery")
+--require("obvious.battery")
 
 -- Vicious widgets
 require("vicious")
@@ -21,8 +24,8 @@ local summon = lib.summon.summon
 -- Variable definitions
 local spawn      = awful.util.spawn
 
-local terminal   = "urxvt"
-local modkey     = "Mod1"
+local terminal   = "xfce4-terminal --geometry 120x55"
+local modkey     = "Mod4"
 
 local home       = os.getenv("HOME")
 local editor     = os.getenv("EDITOR") or "vim"
@@ -34,6 +37,8 @@ beautiful.init(home .. "/.config/awesome/theme.lua")
 
 -- Layout table
 layouts = {
+  awful.layout.suit.floating,
+  awful.layout.suit.tile,
   awful.layout.suit.tile.bottom,
   awful.layout.suit.max,
 }
@@ -44,25 +49,16 @@ for s = 1, screen.count() do
   tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
 end
 
--- Menus
-awesome_menu = {
-  { "manual",      terminal .. " -e man awesome" },
-  { "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
-  { "restart",     awesome.restart },
-  { "quit",        awesome.quit }
-}
+main_menu = awful.menu({ items = { 
+                                    { "Debian", debian.menu.Debian_menu.Debian },
+                                    { "reload", awesome.restart },
+                                    { "logoff", awesome.quit },
+                                    { "open terminal", terminal }
+                                  }})
 
-main_menu = awful.menu({
-  items = {
-    { "awesome",       awesome_menu, beautiful.awesome_icon },
-    { "open terminal", terminal }
-  }
-})
-
-launcher = awful.widget.launcher({
-  image = image(beautiful.awesome_icon),
-  menu  = main_menu
-})
+launcher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
+                                     menu = main_menu })
+-- }}}
 
 function colorize(color, string)
   return '<span color="'..color..'">'..string..'</span>'
@@ -72,34 +68,34 @@ end
 text_clock = awful.widget.textclock({ align = "right" })
 
 -- Gmail widget
-gmail = widget { type = "textbox" }
-vicious.register(gmail, vicious.widgets.gmail, function(w, args)
-  count = args['{count}']
-
-  if count > 0 then
-    return colorize('#ff0000', '[Mail: '..count..']')
-  else
-    return ''
-  end
-end, 60)
+--gmail = widget { type = "textbox" }
+--vicious.register(gmail, vicious.widgets.gmail, function(w, args)
+--  count = args['{count}']
+--
+--  if count > 0 then
+--    return colorize('#ff0000', '[Mail: '..count..']')
+--  else
+--    return ''
+--  end
+--end, 60)
 
 -- MPD widget
-mpd = widget { type = "textbox" }
-vicious.register(mpd, vicious.widgets.mpd, function(w, args)
-  state = args['{state}']
-
-  if state == "Stop" then
-    return colorize('#009000', '--')
-  else
-    if state == "Pause" then
-      state_string = colorize('#009000', '||')
-    else
-      state_string = colorize('#009000', '>')
-    end
-
-    return "Playing: "..args['{Title}'].." "..state_string
-  end
-end)
+--mpd = widget { type = "textbox" }
+--vicious.register(mpd, vicious.widgets.mpd, function(w, args)
+--  state = args['{state}']
+--
+--  if state == "Stop" then
+--    return colorize('#009000', '--')
+--  else
+--    if state == "Pause" then
+--      state_string = colorize('#009000', '||')
+--    else
+--      state_string = colorize('#009000', '>')
+--    end
+--
+--    return "Playing: "..args['{Title}'].." "..state_string
+--  end
+--end)
 
 -- Separator
 separator = widget { type = "textbox" }
@@ -187,15 +183,15 @@ for s = 1, screen.count() do
     },
     layout_box[s],
     text_clock,
-    separator,
-    obvious.battery(),
+    --separator,
+    --obvious.battery(),
     separator,
     s == 1 and systray or nil,
     separator,
-    mpd,
-    separator,
-    gmail,
-    obvious.volume_alsa(0, "Master"),
+    --mpd,
+    --separator,
+    --gmail,
+    --obvious.volume_alsa(0, "Master"),
     tasklist[s],
 
     layout = awful.widget.layout.horizontal.rightleft
@@ -236,9 +232,7 @@ global_keys = awful.util.table.join(
   end),
 
   -- Standard program
-  awful.key({ modkey, },           "Return", function () spawn(terminal) end),
-  awful.key({ modkey, },           "q",      awesome.restart),
-  awful.key({ modkey, "Shift"   }, "q",      awesome.quit),
+  awful.key({ modkey, },           "Return", function () spawn(terminal) end), awful.key({ modkey, },           "q",      awesome.restart), awful.key({ modkey, "Shift"   }, "q",      awesome.quit),
 
   awful.key({ modkey, },           "l",     function () awful.tag.incmwfact( 0.05)    end),
   awful.key({ modkey, },           "h",     function () awful.tag.incmwfact(-0.05)    end),
@@ -262,32 +256,32 @@ global_keys = awful.util.table.join(
   awful.key({ modkey }, ",", function () spawn("mpc prev")   end),
 
   -- prompt
-  awful.key({ modkey },          "r", function () promt_box[mouse.screen]:run() end),
+  awful.key({ modkey },          "r", function () prompt_box[mouse.screen]:run() end),
   awful.key({ modkey, "Shift" }, "p", function () spawn("gmrun")                end),
-
-  -- applications
-  awful.key({ modkey, "Shift" }, "f", function () summon("firefox-beta-bin", { class = "Firefox" }) end),
-  awful.key({ modkey, "Shift" }, "m", function () spawn("firefox-beta-bin gmail.com") end),
-  awful.key({ modkey, "Shift" }, "t", function () spawn("thunar") end),
-
-  -- pixel-grabbing
-  awful.key({ modkey }, "F11", function () spawn("grabc 2>&1 | xclip -i") end),
-
-  -- screengrabbing
-  awful.key({ modkey }, "F12", function () spawn("scrot -e 'mv $f /home/andrew/images/shots/'") end),
-
   awful.key({ modkey }, "x", function ()
     awful.prompt.run({ prompt = "Run Lua code: " },
     prompt_box[mouse.screen].widget,
     awful.util.eval, nil,
     awful.util.getdir("cache") .. "/history_eval")
-  end)
+  end),
+
+  -- applications
+  awful.key({ modkey }, "g", function () spawn("wmctrl -a 'Google Chrome'") end),
+  awful.key({ modkey }, "f", function () spawn("wmctrl -a 'GVIM'") end),
+  awful.key({ modkey }, "t", function () spawn("wmctrl -a 'Terminal'") end),
+  awful.key({ modkey }, "e", function () spawn("thunar") end),
+
+  -- pixel-grabbing
+  awful.key({ modkey }, "F11", function () spawn("grabc 2>&1 | xclip -selection clip-board") end),
+
+  -- screengrabbing
+  awful.key({ modkey }, "i", function () spawn(home .. "/bin/shoot") end)
 )
 
 client_keys = awful.util.table.join(
   awful.key({ modkey, },           "f",      function (c) c.fullscreen = not c.fullscreen  end),
   awful.key({ modkey, "Shift" },   "c",      function (c) c:kill()                         end),
-  awful.key({ modkey, },           "t",      awful.client.floating.toggle                     ),
+  -- awful.key({ modkey, },           "t",      awful.client.floating.toggle                     ),
   awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
   awful.key({ modkey, },           "o",      awful.client.movetoscreen                        ),
   awful.key({ modkey, "Shift" },   "r",      function (c) c:redraw()                       end),
@@ -368,10 +362,10 @@ awful.rules.rules = {
     properties = { floating = true }
   },
 
-  {
-    rule =       { class = "Skype" },
-    properties = { tag = tags[1][2] }
-  },
+  --{
+  --  rule =       { class = "Skype" },
+  --  properties = { tag = tags[1][2] }
+  --},
 }
 
 -- Signal function to execute when a new client appears.
@@ -391,3 +385,5 @@ end)
 
 client.add_signal("focus",   function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+awful.util.spawn(home .. "/.config/awesome/autostart.sh")
