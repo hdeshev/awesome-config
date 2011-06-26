@@ -24,7 +24,7 @@ local summon = lib.summon.summon
 -- Variable definitions
 local spawn      = awful.util.spawn
 
-local terminal   = "xfce4-terminal --geometry 120x55"
+local terminal   = "xfce4-terminal --geometry 120x53"
 local modkey     = "Mod4"
 
 local home       = os.getenv("HOME")
@@ -277,12 +277,13 @@ global_keys = awful.util.table.join(
   awful.key({ modkey }, "F11", function () spawn("grabc 2>&1 | xclip -selection clip-board") end),
 
   -- screengrabbing
-  awful.key({ modkey }, "i", function () spawn(home .. "/bin/shoot") end)
+  awful.key({ modkey }, "i", function () spawn(home .. "/bin/shoot", false) end)
 )
 
 client_keys = awful.util.table.join(
   awful.key({ modkey, },           "f",      function (c) c.fullscreen = not c.fullscreen  end),
   awful.key({ modkey, "Shift" },   "c",      function (c) c:kill()                         end),
+  awful.key({ modkey },            "w",      function (c) c:kill()                         end),
   -- awful.key({ modkey, },           "t",      awful.client.floating.toggle                     ),
   awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
   awful.key({ modkey, },           "o",      awful.client.movetoscreen                        ),
@@ -353,21 +354,30 @@ awful.rules.rules = {
       buttons = client_buttons
     }
   },
-
   {
     rule =       { class = "MPlayer" },
     properties = { floating = true },
   },
-
   {
     rule =       { class = "gimp" },
     properties = { floating = true }
   },
-
-  --{
-  --  rule =       { class = "Skype" },
-  --  properties = { tag = tags[1][2] }
-  --},
+  {
+    rule =       { class = "Skype" },
+    properties = { tag = tags[1][3] }
+  },
+  {
+    rule =       { class = "Audacious" },
+    properties = { tag = tags[1][3] }
+  },
+  {
+    rule =       { class = "Google-chrome" },
+    properties = { tag = tags[1][1] }
+  },
+  {
+    rule =       { class = "Deluge-gtk" },
+    properties = { tag = tags[1][5] }
+  }
 }
 
 -- Signal function to execute when a new client appears.
