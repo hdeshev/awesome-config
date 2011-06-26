@@ -8,5 +8,12 @@ xset m 4 1
 xscreensaver -no-splash &
 
 dropbox start -i &
-keepassx /home/hristo/.keepassx/deshev.kdb &
+
+if [ "$(pidof keepassx)" ]
+then
+  echo "keepassx already running"
+else
+  keepassx /home/hristo/.keepassx/deshev.kdb &
+fi
+
 truecrypt --auto-mount=favorites &
