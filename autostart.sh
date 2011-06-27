@@ -17,3 +17,6 @@ else
 fi
 
 truecrypt --auto-mount=favorites &
+
+#using feh to render the wallpaper
+feh --bg-scale /data/Photos/Wallpapers/sub-zero---mortal-kombat.jpg &
