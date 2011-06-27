@@ -200,9 +200,9 @@ end
 
 -- Mouse bindings
 root.buttons(awful.util.table.join(
-  awful.button({ }, 3, function () main_menu:toggle() end),
-  awful.button({ }, 4, awful.tag.viewnext),
-  awful.button({ }, 5, awful.tag.viewprev)
+  awful.button({ }, 3, function () main_menu:toggle() end)
+  -- awful.button({ }, 4, awful.tag.viewnext),
+  -- awful.button({ }, 5, awful.tag.viewprev)
 ))
 
 -- Key bindings
@@ -268,10 +268,10 @@ global_keys = awful.util.table.join(
   end),
 
   -- applications
-  awful.key({ modkey }, "g", function () spawn("wmctrl -a 'Google Chrome'") end),
-  awful.key({ modkey }, "f", function () spawn("wmctrl -a 'GVIM'") end),
-  awful.key({ modkey }, "t", function () spawn("wmctrl -a 'Terminal'") end),
-  awful.key({ modkey }, "e", function () spawn("thunar") end),
+  awful.key({ modkey }, "g", function () spawn("wmctrl -a 'Google Chrome'", false) end),
+  awful.key({ modkey }, "f", function () spawn("wmctrl -a 'GVIM'", false) end),
+  awful.key({ modkey }, "t", function () spawn("wmctrl -a 'Terminal'", false) end),
+  awful.key({ modkey }, "e", function () spawn("thunar", false) end),
 
   -- pixel-grabbing
   awful.key({ modkey }, "F11", function () spawn("grabc 2>&1 | xclip -selection clip-board") end),
