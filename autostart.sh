@@ -20,3 +20,11 @@ truecrypt --auto-mount=favorites &
 
 #using feh to render the wallpaper
 feh --bg-scale /data/Photos/Wallpapers/sub-zero---mortal-kombat.jpg &
+
+#clipboard history
+if [ "$(pidof parcellite)" ]
+then
+  echo "parcellite already running"
+else
+  parcellite &
+fi
