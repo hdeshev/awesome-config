@@ -97,6 +97,15 @@ text_clock = awful.widget.textclock({ align = "right" })
 --  end
 --end)
 
+--- RAM ---
+mem_widget = widget({ type = "textbox" })
+vicious.register(mem_widget, vicious.widgets.mem, "$1% RAM |", 13)
+
+
+--- CPU ---
+cpu_widget = widget({ type = "textbox" })
+vicious.register(cpu_widget, vicious.widgets.cpu, "$1% CPU |") 
+
 -- Separator
 separator = widget { type = "textbox" }
 separator.text = '<span color="#ee1111"> :: </span>'
@@ -187,6 +196,9 @@ for s = 1, screen.count() do
     --obvious.battery(),
     separator,
     s == 1 and systray or nil,
+    separator,
+    cpu_widget,
+    mem_widget,
     separator,
     --mpd,
     --separator,
