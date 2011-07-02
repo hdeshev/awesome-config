@@ -379,8 +379,12 @@ awful.rules.rules = {
     properties = { tag = tags[1][3] }
   },
   {
-    rule =       { class = "Audacious" },
+    rule =       { class = "Pidgin" },
     properties = { tag = tags[1][3] }
+  },
+  {
+    rule =       { class = "Audacious" },
+    properties = { tag = tags[1][5] }
   },
   {
     rule =       { class = "Google-chrome" },
