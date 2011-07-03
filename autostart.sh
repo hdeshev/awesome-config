@@ -19,8 +19,7 @@ fi
 truecrypt --auto-mount=favorites &
 
 #using feh to render the wallpaper
-#feh --bg-scale /data/Photos/Wallpapers/sub-zero---mortal-kombat.jpg &
-feh --bg-center /data/Photos/Wallpapers/Mjolnir.png &
+eval `cat $HOME/.fehbg`
 
 #clipboard history
 if [ "$(pidof parcellite)" ]
