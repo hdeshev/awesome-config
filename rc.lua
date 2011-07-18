@@ -21,16 +21,22 @@ require("vicious")
 require ("lib.summon")
 local summon = lib.summon.summon
 
+function trim(s)
+  return (string.gsub(s, "^%s*(.-)%s*$", "%1"))
+end
+
+local hostname = trim(awful.util.pread("hostname"))
+require("hosts." .. hostname)
+
 -- Variable definitions
 local spawn      = awful.util.spawn
 
-local terminal   = "xfce4-terminal --geometry 120x53"
 local modkey     = "Mod4"
 
 local home       = os.getenv("HOME")
 local editor     = os.getenv("EDITOR") or "vim"
 
-local editor_cmd = terminal .. " -e " .. editor
+local editor_cmd = host.config.terminal .. " -e " .. editor
 
 -- Initialize theme
 beautiful.init(home .. "/.config/awesome/theme.lua")
@@ -53,7 +59,7 @@ main_menu = awful.menu({ items = {
                                     { "Debian", debian.menu.Debian_menu.Debian },
                                     { "reload", awesome.restart },
                                     { "logoff", awesome.quit },
-                                    { "open terminal", terminal }
+                                    { "open terminal", host.config.terminal }
                                   }})
 
 launcher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
@@ -244,7 +250,7 @@ global_keys = awful.util.table.join(
   end),
 
   -- Standard program
-  awful.key({ modkey, },           "Return", function () spawn(terminal) end),
+  awful.key({ modkey, },           "Return", function () spawn(host.config.terminal) end),
   --awful.key({ modkey, },           "q",      awesome.restart),
   --awful.key({ modkey, "Shift"   }, "q",      awesome.quit),
 
@@ -264,20 +270,9 @@ global_keys = awful.util.table.join(
   awful.key({ modkey }, "F8", function () spawn("brightness down")                  end),
   awful.key({ modkey }, "F9", function () spawn("brightness up")                    end),
 
-  -- music management
-  awful.key({ modkey }, "p", function () spawn("mpc toggle") end),
-  awful.key({ modkey }, ".", function () spawn("mpc next")   end),
-  awful.key({ modkey }, ",", function () spawn("mpc prev")   end),
-
   -- prompt
-  awful.key({ modkey },          "r", function () prompt_box[mouse.screen]:run() end),
-  awful.key({ modkey, "Shift" }, "p", function () spawn("gmrun")                end),
-  awful.key({ modkey }, "x", function ()
-    awful.prompt.run({ prompt = "Run Lua code: " },
-    prompt_box[mouse.screen].widget,
-    awful.util.eval, nil,
-    awful.util.getdir("cache") .. "/history_eval")
-  end),
+  awful.key({ modkey          }, "r", function () spawn("gmrun")                end),
+  awful.key({ modkey, "Shift" }, "r", function () prompt_box[mouse.screen]:run() end),
 
   -- applications
   awful.key({ modkey }, "g", function () spawn("wmctrl -a 'Google Chrome'", false) end),
