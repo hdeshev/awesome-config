@@ -36,3 +36,11 @@ then
 else
   /usr/lib/vino/vino-server &
 fi
+
+#Thunar in daemon mode
+if [ "$(pidof thunar)" ]
+then
+  echo "thunar already running"
+else
+  thunar --daemon &
+fi
