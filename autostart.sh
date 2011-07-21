@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # us & bg phonetic layout. right alt switches, scroll lock lights up when bg toggled
 setxkbmap us,bg ,phonetic grp:toggle,grp_led:scroll
 # remap caps lock to ctrl
@@ -27,14 +29,6 @@ then
   echo "parcellite already running"
 else
   parcellite &
-fi
-
-#VNC server - remote pair programming
-if [ "$(pidof vino-server)" ]
-then
-  echo "vino-server already running"
-else
-  /usr/lib/vino/vino-server &
 fi
 
 #Thunar in daemon mode
