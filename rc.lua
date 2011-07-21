@@ -370,24 +370,24 @@ awful.rules.rules = {
     properties = { floating = true }
   },
   {
-    rule =       { class = "Skype" },
-    properties = { tag = tags[1][3] }
-  },
-  {
-    rule =       { class = "Pidgin" },
-    properties = { tag = tags[1][3] }
-  },
-  {
-    rule =       { class = "Audacious" },
-    properties = { tag = tags[1][5] }
-  },
-  {
     rule =       { class = "Google-chrome" },
     properties = { tag = tags[1][1] }
   },
   {
+    rule =       { class = "Skype" },
+    properties = { tag = tags[1][8] }
+  },
+  {
+    rule =       { class = "Pidgin" },
+    properties = { tag = tags[1][8] }
+  },
+  {
+    rule =       { class = "Audacious" },
+    properties = { tag = tags[1][9] }
+  },
+  {
     rule =       { class = "Deluge-gtk" },
-    properties = { tag = tags[1][5] }
+    properties = { tag = tags[1][9] }
   }
 }
 
