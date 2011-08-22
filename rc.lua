@@ -43,8 +43,8 @@ beautiful.init(home .. "/.config/awesome/theme.lua")
 
 -- Layout table
 layouts = {
-  awful.layout.suit.tile.right,
   awful.layout.suit.tile.left,
+  awful.layout.suit.tile.right,
   awful.layout.suit.floating,
   awful.layout.suit.max,
 }
@@ -374,15 +374,15 @@ awful.rules.rules = {
   },
   {
     rule =       { class = "Skype" },
-    properties = { tag = tags[1][8] }
+    properties = { tag = tags[1][8], floating = true }
   },
   {
     rule =       { class = "Pidgin" },
-    properties = { tag = tags[1][8] }
+    properties = { tag = tags[1][8], floating = true }
   },
   {
     rule =       { class = "Audacious" },
-    properties = { tag = tags[1][9] }
+    properties = { tag = tags[1][9], floating = true }
   },
   {
     rule =       { class = "Deluge-gtk" },
