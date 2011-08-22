@@ -272,7 +272,7 @@ global_keys = awful.util.table.join(
 
   -- prompt
   awful.key({ modkey          }, "r", function () spawn("gmrun")                end),
-  awful.key({ modkey, "Shift" }, "r", function () prompt_box[mouse.screen]:run() end),
+  -- awful.key({ modkey, "Shift" }, "r", function () prompt_box[mouse.screen]:run() end),
 
   -- applications
   awful.key({ modkey }, "g", function () spawn("wmctrl -a 'Google Chrome'", false) end),
@@ -289,7 +289,6 @@ global_keys = awful.util.table.join(
 
 client_keys = awful.util.table.join(
   awful.key({ modkey, "Shift"},    "f",      function (c) c.fullscreen = not c.fullscreen  end),
-  awful.key({ modkey, "Shift" },   "c",      function (c) c:kill()                         end),
   awful.key({ modkey },            "w",      function (c) c:kill()                         end),
   -- awful.key({ modkey, },           "t",      awful.client.floating.toggle                     ),
   awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
