@@ -373,6 +373,14 @@ awful.rules.rules = {
     properties = { tag = tags[1][1] }
   },
   {
+    rule =       { class = "Git-gui" },
+    properties = { floating = true }
+  },
+  {
+    rule =       { class = "Toplevel" },
+    properties = { floating = true }
+  },
+  {
     rule =       { class = "Skype" },
     properties = { tag = tags[1][8], floating = true }
   },
