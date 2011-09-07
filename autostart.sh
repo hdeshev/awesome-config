@@ -9,6 +9,14 @@ xset m 4 1
 # make sure you run xscreensaver (with splash) and configure it first
 xscreensaver -no-splash &
 
+# Network Manager applet - connect to various networks (eth, wlan)
+if [ "$(pidof nm-applet)" ]
+then
+  echo "nm-applet already running"
+else
+  nm-applet &
+fi
+
 dropbox start -i &
 
 if [ "$(pidof keepassx)" ]
