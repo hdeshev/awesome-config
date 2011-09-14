@@ -4,8 +4,13 @@
 setxkbmap us,bg ,phonetic grp:toggle,grp_led:scroll
 # remap caps lock to ctrl
 setxkbmap -option ctrl:nocaps
-# increase mouse speed and acceleration
-xset m 4 1
+
+# increase "mouse" speed and acceleration
+# Mouse-optimized
+# xset m 4 1
+# Trackball-optimized
+xset m 8 1
+
 # make sure you run xscreensaver (with splash) and configure it first
 xscreensaver -no-splash &
 
