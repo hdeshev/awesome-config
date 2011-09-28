@@ -381,6 +381,10 @@ awful.rules.rules = {
     properties = { floating = true }
   },
   {
+    rule =       { class = "Thunderbird" },
+    properties = { tag = tags[1][7], maximized = true }
+  },
+  {
     rule =       { class = "Skype" },
     properties = { tag = tags[1][8], floating = true }
   },
