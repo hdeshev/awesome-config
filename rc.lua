@@ -298,6 +298,9 @@ client_keys = awful.util.table.join(
   awful.key({ modkey, },           "m",      function (c)
     c.maximized_horizontal = not c.maximized_horizontal
     c.maximized_vertical   = not c.maximized_vertical
+  end),
+  awful.key({ modkey, },           "v",      function (c)
+    c.maximized_vertical   = not c.maximized_vertical
   end)
 )
 
@@ -370,6 +373,10 @@ awful.rules.rules = {
   },
   {
     rule =       { class = "Google-chrome" },
+    properties = { tag = tags[1][1] }
+  },
+  {
+    rule =       { class = "Firefox" },
     properties = { tag = tags[1][1] }
   },
   {
