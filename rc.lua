@@ -73,36 +73,6 @@ end
 -- Textclock widget
 text_clock = awful.widget.textclock({ align = "right" })
 
--- Gmail widget
---gmail = widget { type = "textbox" }
---vicious.register(gmail, vicious.widgets.gmail, function(w, args)
---  count = args['{count}']
---
---  if count > 0 then
---    return colorize('#ff0000', '[Mail: '..count..']')
---  else
---    return ''
---  end
---end, 60)
-
--- MPD widget
---mpd = widget { type = "textbox" }
---vicious.register(mpd, vicious.widgets.mpd, function(w, args)
---  state = args['{state}']
---
---  if state == "Stop" then
---    return colorize('#009000', '--')
---  else
---    if state == "Pause" then
---      state_string = colorize('#009000', '||')
---    else
---      state_string = colorize('#009000', '>')
---    end
---
---    return "Playing: "..args['{Title}'].." "..state_string
---  end
---end)
-
 --- RAM ---
 mem_widget = widget({ type = "textbox" })
 vicious.register(mem_widget, vicious.widgets.mem, "$1% RAM |", 13)
@@ -198,18 +168,12 @@ for s = 1, screen.count() do
     },
     layout_box[s],
     text_clock,
-    --separator,
-    --obvious.battery(),
     separator,
     s == 1 and systray or nil,
     separator,
     cpu_widget,
     mem_widget,
     separator,
-    --mpd,
-    --separator,
-    --gmail,
-    --obvious.volume_alsa(0, "Master"),
     tasklist[s],
 
     layout = awful.widget.layout.horizontal.rightleft
@@ -219,8 +183,6 @@ end
 -- Mouse bindings
 root.buttons(awful.util.table.join(
   awful.button({ }, 3, function () main_menu:toggle() end)
-  -- awful.button({ }, 4, awful.tag.viewnext),
-  -- awful.button({ }, 5, awful.tag.viewprev)
 ))
 
 -- Key bindings
@@ -251,8 +213,6 @@ global_keys = awful.util.table.join(
 
   -- Standard program
   awful.key({ modkey, },           "Return", function () spawn(host.config.terminal) end),
-  --awful.key({ modkey, },           "q",      awesome.restart),
-  --awful.key({ modkey, "Shift"   }, "q",      awesome.quit),
 
   awful.key({ modkey, },           "l",     function () awful.tag.incmwfact( 0.05)    end),
   awful.key({ modkey, },           "h",     function () awful.tag.incmwfact(-0.05)    end),
@@ -275,9 +235,6 @@ global_keys = awful.util.table.join(
   -- awful.key({ modkey, "Shift" }, "r", function () prompt_box[mouse.screen]:run() end),
 
   -- applications
-  awful.key({ modkey }, "g", function () spawn("wmctrl -a 'Google Chrome'", false) end),
-  awful.key({ modkey }, "f", function () spawn("wmctrl -a 'GVIM'", false) end),
-  awful.key({ modkey }, "t", function () spawn("wmctrl -a 'Terminal'", false) end),
   awful.key({ modkey }, "e", function () spawn("thunar", false) end),
 
   -- pixel-grabbing
