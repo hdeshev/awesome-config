@@ -362,6 +362,10 @@ awful.rules.rules = {
     properties = { floating = true }
   },
   {
+    rule =       { class = "Thunar" },
+    properties = { floating = true }
+  },
+  {
     rule =       { class = "Toplevel" },
     properties = { floating = true }
   },
