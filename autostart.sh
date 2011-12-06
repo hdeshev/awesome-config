@@ -4,6 +4,8 @@
 setxkbmap us,bg ,phonetic grp:toggle,grp_led:scroll
 # remap caps lock to ctrl
 setxkbmap -option ctrl:nocaps
+# right Win key is my Compose key
+setxkbmap -option compose:rwin
 
 # increase "mouse" speed and acceleration
 # Mouse-optimized
