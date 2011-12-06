@@ -362,6 +362,14 @@ awful.rules.rules = {
     properties = { floating = true }
   },
   {
+    rule =       { class = "File-roller" },
+    properties = { floating = true }
+  },
+  {
+    rule =       { class = "Gitk" },
+    properties = { floating = true }
+  },
+  {
     rule =       { class = "Thunar" },
     properties = { floating = true }
   },
