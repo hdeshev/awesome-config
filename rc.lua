@@ -324,6 +324,12 @@ client_buttons = awful.util.table.join(
 
 root.keys(global_keys)
 
+function floating(window_class)
+  return {
+    rule =       { class = window_class },
+    properties = { floating = true },
+  }
+end
 -- Rules
 awful.rules.rules = {
   -- All clients will match this rule.
@@ -338,14 +344,6 @@ awful.rules.rules = {
     }
   },
   {
-    rule =       { class = "MPlayer" },
-    properties = { floating = true },
-  },
-  {
-    rule =       { class = "gimp" },
-    properties = { floating = true }
-  },
-  {
     rule =       { class = "Google-chrome" },
     properties = { tag = tags[1][1] }
   },
@@ -353,30 +351,14 @@ awful.rules.rules = {
     rule =       { class = "Firefox" },
     properties = { tag = tags[1][1] }
   },
-  {
-    rule =       { class = "Git-gui" },
-    properties = { floating = true }
-  },
-  {
-    rule =       { class = "Keepassx" },
-    properties = { floating = true }
-  },
-  {
-    rule =       { class = "File-roller" },
-    properties = { floating = true }
-  },
-  {
-    rule =       { class = "Gitk" },
-    properties = { floating = true }
-  },
-  {
-    rule =       { class = "Thunar" },
-    properties = { floating = true }
-  },
-  {
-    rule =       { class = "Toplevel" },
-    properties = { floating = true }
-  },
+  floating("MPlayer"),
+  floating("Git-gui"),
+  floating("Keepassx"),
+  floating("File-roller"),
+  floating("Gitk"),
+  floating("VirtualBox"),
+  floating("Thunar"),
+  floating("Toplevel"),
   {
     rule =       { class = "Skype" },
     properties = { tag = tags[1][8], floating = true }
@@ -390,7 +372,7 @@ awful.rules.rules = {
     properties = { tag = tags[1][9], floating = true }
   },
   {
-    rule =       { class = "Deluge-gtk" },
+    rule =       { class = "Deluge" },
     properties = { tag = tags[1][9] }
   }
 }
