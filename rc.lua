@@ -397,3 +397,6 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 
 awful.util.spawn(home .. "/.config/awesome/autostart.sh", false)
 awful.util.spawn(home .. "/.config/awesome/hosts/" .. hostname .. ".sh", false)
+
+-- Increase font size and use a more readable font for notification popups.
+naughty.config.default_preset.font             = "Ubuntu Mono 24"
