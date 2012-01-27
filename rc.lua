@@ -369,6 +369,8 @@ awful.rules.rules = {
   floating("Thunar"),
   floating("Toplevel"),
   no_size_hints("Xfce4-terminal"),
+  no_size_hints("Gnome-terminal"),
+  no_size_hints("Roxterm"),
   no_size_hints("Gvim"),
   {
     rule =       { class = "Skype" },
