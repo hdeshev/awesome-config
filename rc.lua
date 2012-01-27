@@ -330,6 +330,15 @@ function floating(window_class)
     properties = { floating = true },
   }
 end
+-- Always take the size alotted by awesome.
+-- Prevent some windows from leaving out annoying gaps.
+function no_size_hints(window_class)
+  return {
+    rule =       { class = window_class },
+    properties = { size_hints_honor = false },
+  }
+end
+
 -- Rules
 awful.rules.rules = {
   -- All clients will match this rule.
@@ -359,6 +368,8 @@ awful.rules.rules = {
   floating("VirtualBox"),
   floating("Thunar"),
   floating("Toplevel"),
+  no_size_hints("Xfce4-terminal"),
+  no_size_hints("Gvim"),
   {
     rule =       { class = "Skype" },
     properties = { tag = tags[1][8], floating = true }
