@@ -352,14 +352,6 @@ awful.rules.rules = {
       buttons = client_buttons
     }
   },
-  {
-    rule =       { class = "Google-chrome" },
-    properties = { tag = tags[1][1] }
-  },
-  {
-    rule =       { class = "Firefox" },
-    properties = { tag = tags[1][1] }
-  },
   floating("MPlayer"),
   floating("Git-gui"),
   floating("Keepassx"),
