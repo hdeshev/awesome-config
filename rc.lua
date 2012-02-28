@@ -7,9 +7,6 @@ require("beautiful")
 -- Notification library
 require("naughty")
 
--- Load Debian menu entries
-require("debian.menu")
-
 -- Obvious widgets
 require("obvious.volume_alsa")
 require("obvious.basic_mpd")
@@ -73,7 +70,7 @@ for s = 1, screen.count() do
 end
 
 main_menu = awful.menu({ items = { 
-                                    { "Debian", debian.menu.Debian_menu.Debian },
+                                    -- { "Debian", debian.menu.Debian_menu.Debian },
                                     { "reload", awesome.restart },
                                     { "logoff", awesome.quit },
                                     { "open terminal", host.config.terminal }
