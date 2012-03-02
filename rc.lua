@@ -402,3 +402,9 @@ awful.util.spawn(home .. "/.config/awesome/hosts/" .. hostname .. ".sh", false)
 
 -- Increase font size and use a more readable font for notification popups.
 naughty.config.default_preset.font             = "Ubuntu Mono 24"
+
+-- Go to first tag after done initializing.
+local screen = mouse.screen
+if tags[screen][1] then
+  awful.tag.viewonly(tags[screen][1])
+end
