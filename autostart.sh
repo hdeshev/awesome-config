@@ -43,3 +43,8 @@ then
 else
   thunar --daemon &
 fi
+
+# Workaround to make Java GUI apps work see:
+# http://awesome.naquadah.org/wiki/Problems_with_Java
+# You need `wmname` - Arch package: wmname; Ubuntu package: suckless-tools
+wmname LG3D
