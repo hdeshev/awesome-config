@@ -52,6 +52,14 @@ else
   kbdd &
 fi
 
+#xcape - turn single Ctrl keypresses to Esc
+if [ "$(pidof xcape)" ]
+then
+  echo "xcape already running"
+else
+  $HOME/bin/xcape &
+fi
+
 # Workaround to make Java GUI apps work see:
 # http://awesome.naquadah.org/wiki/Problems_with_Java
 # You need `wmname` - Arch package: wmname; Ubuntu package: suckless-tools
