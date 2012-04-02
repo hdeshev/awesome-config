@@ -63,8 +63,8 @@ for s = 1, screen.count() do
 
   -- different tags have different layouts
   merge(screen_tags, 0, awful.tag.new({ 1 }, s, awful.layout.suit.max))
-  merge(screen_tags, 1, awful.tag.new({ 2, 3, 4, 5, 6, 7 }, s, awful.layout.suit.tile.left))
-  merge(screen_tags, 7, awful.tag.new({ 8, 9 }, s, awful.layout.suit.floating))
+  merge(screen_tags, 1, awful.tag.new({ 2, 3, 4, 5, 6 }, s, awful.layout.suit.tile.left))
+  merge(screen_tags, 6, awful.tag.new({ 7, 8, 9 }, s, awful.layout.suit.floating))
 
   tags[s] = screen_tags
 end
@@ -361,6 +361,10 @@ awful.rules.rules = {
   no_size_hints("Gnome-terminal"),
   no_size_hints("Roxterm"),
   no_size_hints("Gvim"),
+  {
+    rule =       { class = "Thunderbird" },
+    properties = { tag = tags[1][7] }
+  },
   {
     rule =       { class = "Skype" },
     properties = { tag = tags[1][8], floating = true }
