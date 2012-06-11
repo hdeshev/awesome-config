@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# Load nvidia X settings
+nvidia-settings --load-config-only
+
+# Start the XFCE settings daemon to make GUI programs look good
+xfsettingsd --force
+
 # Ubuntu only.
 dropbox start -i &
 
