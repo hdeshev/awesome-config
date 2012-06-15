@@ -41,7 +41,9 @@ if [ "$(pidof thunar)" ]
 then
   echo "thunar already running"
 else
-  thunar --daemon &
+    # Trigger a gvfs network update before starting Thunar. Fixes slow startups after that.
+    gvfs-ls network: && thunar --daemon &
+    #thunar --daemon &
 fi
 
 #kbdd - remember keyboard layouts for every window
