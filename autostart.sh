@@ -46,14 +46,6 @@ else
     #thunar --daemon &
 fi
 
-#kbdd - remember keyboard layouts for every window
-if [ "$(pidof kbdd)" ]
-then
-  echo "kbdd already running"
-else
-  kbdd &
-fi
-
 # Workaround to make Java GUI apps work see:
 # http://awesome.naquadah.org/wiki/Problems_with_Java
 # You need `wmname` - Arch package: wmname; Ubuntu package: suckless-tools
