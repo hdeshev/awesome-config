@@ -1,11 +1,11 @@
 #!/bin/sh
 
-# us & bg phonetic layout. right alt switches, scroll lock lights up when bg toggled
-setxkbmap us,bg ,phonetic grp:toggle,grp_led:scroll
 # remap caps lock to ctrl
 setxkbmap -option ctrl:nocaps
 # right Win key is my Compose key
 setxkbmap -option compose:rwin
+# us & bg phonetic layout. right alt switches, caps lock lights up when bg toggled
+setxkbmap us,bg ,phonetic grp:toggle,grp_led:caps
 
 # increase "mouse" speed and acceleration
 # Mouse-optimized
