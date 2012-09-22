@@ -23,7 +23,8 @@ else
   keepassx /home/hristo/.keepassx/deshev.kdb &
 fi
 
-truecrypt --auto-mount=favorites &
+#truecrypt --auto-mount=favorites &
+~/bin/mount-private.sh
 
 #using feh to render the wallpaper
 eval `cat $HOME/.fehbg`
