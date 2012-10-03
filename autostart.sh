@@ -38,14 +38,14 @@ else
 fi
 
 #Thunar in daemon mode
-if [ "$(pidof thunar)" ]
-then
-  echo "thunar already running"
-else
-    # Trigger a gvfs network update before starting Thunar. Fixes slow startups after that.
-    gvfs-ls network: && thunar --daemon &
-    #thunar --daemon &
-fi
+#if [ "$(pidof thunar)" ]
+#then
+#  echo "thunar already running"
+#else
+#    # Trigger a gvfs network update before starting Thunar. Fixes slow startups after that.
+#    gvfs-ls network: && thunar --daemon &
+#    #thunar --daemon &
+#fi
 
 # Workaround to make Java GUI apps work see:
 # http://awesome.naquadah.org/wiki/Problems_with_Java

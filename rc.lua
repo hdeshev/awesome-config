@@ -249,7 +249,7 @@ global_keys = awful.util.table.join(
   -- awful.key({ modkey, "Shift" }, "r", function () prompt_box[mouse.screen]:run() end),
 
   -- applications
-  awful.key({ modkey }, "e", function () spawn("thunar", false) end),
+  awful.key({ modkey }, "e", function () spawn("pcmanfm", false) end),
 
   -- pixel-grabbing
   awful.key({ modkey }, "F11", function () spawn("grabc 2>&1 | xclip -selection clip-board") end),
@@ -356,6 +356,7 @@ awful.rules.rules = {
   floating("Gitk"),
   floating("VirtualBox"),
   floating("Thunar"),
+  floating("Pcmanfm"),
   floating("Toplevel"),
   no_size_hints("Xfce4-terminal"),
   no_size_hints("Gnome-terminal"),
