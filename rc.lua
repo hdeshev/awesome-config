@@ -368,7 +368,7 @@ awful.rules.rules = {
   no_size_hints("Xfce4-terminal"),
   no_size_hints("Gnome-terminal"),
   no_size_hints("Roxterm"),
-  no_size_hints("x-terminal-emulator"),
+  no_size_hints("X-terminal-emulator"),
   no_size_hints("Gvim"),
   {
     rule =       { class = "Thunderbird" },
