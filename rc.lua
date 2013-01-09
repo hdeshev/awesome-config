@@ -7,12 +7,6 @@ require("beautiful")
 -- Notification library
 require("naughty")
 
--- Vicious widgets
-require("vicious")
-
-require ("lib.summon")
-local summon = lib.summon.summon
-
 function trim(s)
   return (string.gsub(s, "^%s*(.-)%s*$", "%1"))
 end
