@@ -1,11 +1,10 @@
 -- Standard awesome library
-require("awful")
-require("awful.autofocus")
-require("awful.rules")
+local awful = require("awful")
+awful.rules = require("awful.rules")
 -- Theme handling library
-require("beautiful")
+local beautiful = require("beautiful")
 -- Notification library
-require("naughty")
+local naughty = require("naughty")
 
 local vicious = require("vicious")
 
@@ -18,7 +17,7 @@ function eprint(message)
 end
 
 local hostname = trim(awful.util.pread("hostname"))
-require("hosts." .. hostname)
+local terminal = "x-terminal-emulator"
 
 -- Variable definitions
 local spawn      = awful.util.spawn
@@ -28,7 +27,7 @@ local modkey     = "Mod4"
 local home       = os.getenv("HOME")
 local editor     = os.getenv("EDITOR") or "vim"
 
-local editor_cmd = host.config.terminal .. " -e " .. editor
+local editor_cmd = terminal .. " -e " .. editor
 
 -- Initialize theme
 beautiful.init(home .. "/.config/awesome/theme.lua")
@@ -63,7 +62,7 @@ main_menu = awful.menu({ items = {
                                     -- { "Debian", debian.menu.Debian_menu.Debian },
                                     { "reload", awesome.restart },
                                     { "logoff", awesome.quit },
-                                    { "open terminal", host.config.terminal }
+                                    { "open terminal", terminal }
                                   }})
 
 launcher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
@@ -216,7 +215,7 @@ global_keys = awful.util.table.join(
   end),
 
   -- Standard program
-  awful.key({ modkey, },           "Return", function () spawn(host.config.terminal) end),
+  awful.key({ modkey, },           "Return", function () spawn(terminal) end),
 
   awful.key({ modkey, },           "l",     function () awful.tag.incmwfact( 0.05)    end),
   awful.key({ modkey, },           "h",     function () awful.tag.incmwfact(-0.05)    end),
@@ -352,6 +351,7 @@ awful.rules.rules = {
   no_size_hints("Xfce4-terminal"),
   no_size_hints("Gnome-terminal"),
   no_size_hints("Roxterm"),
+  no_size_hints("x-terminal-emulator"),
   no_size_hints("Gvim"),
   {
     rule =       { class = "Thunderbird" },
