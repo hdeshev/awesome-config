@@ -7,11 +7,6 @@ require("beautiful")
 -- Notification library
 require("naughty")
 
--- Obvious widgets
-require("obvious.volume_alsa")
-require("obvious.basic_mpd")
---require("obvious.battery")
-
 -- Vicious widgets
 require("vicious")
 
@@ -238,11 +233,9 @@ global_keys = awful.util.table.join(
   awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
   -- sound & brightness
-  -- awful.key({}, "XF86AudioMute", function () obvious.volume_alsa.mute(0, "Master")     end),
-  -- Play/Pause the MOC player
   awful.key({}, "XF86AudioPlay", function () spawn("mocp -G") end),
-  awful.key({}, "XF86AudioLowerVolume", function () obvious.volume_alsa.lower(0, "Master", 1) end),
-  awful.key({}, "XF86AudioRaiseVolume", function () obvious.volume_alsa.raise(0, "Master", 1) end),
+  awful.key({}, "XF86AudioLowerVolume", function () spawn("amixer set Master 5%-") end),
+  awful.key({}, "XF86AudioRaiseVolume", function () spawn("amixer set Master 5%+") end),
   awful.key({ modkey }, "F8", function () spawn("brightness down")                  end),
   awful.key({ modkey }, "F9", function () spawn("brightness up")                    end),
 
