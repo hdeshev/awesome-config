@@ -196,7 +196,7 @@ global_keys = awful.util.table.join(
   awful.key({ modkey, }, "Escape", awful.tag.history.restore),
 
   awful.key({ modkey, }, "j", function ()
-    awful.client.focus.byidx( 1)
+    awful.client.focus.byidx(1)
     if client.focus then client.focus:raise() end
   end),
   awful.key({ modkey, }, "k", function ()
