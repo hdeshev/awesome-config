@@ -1,6 +1,7 @@
 -- Standard awesome library
 local awful = require("awful")
 awful.rules = require("awful.rules")
+awful.autofocus = require("awful.autofocus")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
