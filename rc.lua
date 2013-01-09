@@ -7,6 +7,8 @@ require("beautiful")
 -- Notification library
 require("naughty")
 
+local vicious = require("vicious")
+
 function trim(s)
   return (string.gsub(s, "^%s*(.-)%s*$", "%1"))
 end
@@ -51,9 +53,8 @@ for s = 1, screen.count() do
   screen_tags = {}
 
   -- different tags have different layouts
-  merge(screen_tags, 0, awful.tag.new({ 1 }, s, awful.layout.suit.max))
-  merge(screen_tags, 1, awful.tag.new({ 2, 3, 4, 5, 6 }, s, awful.layout.suit.tile.left))
-  merge(screen_tags, 6, awful.tag.new({ 7, 8, 9 }, s, awful.layout.suit.floating))
+  merge(screen_tags, 0, awful.tag.new({ 1, 2, 3, 4, 5, 6, 7 }, s, awful.layout.suit.tile.left))
+  merge(screen_tags, 6, awful.tag.new({ 8, 9 }, s, awful.layout.suit.floating))
 
   tags[s] = screen_tags
 end
@@ -340,6 +341,7 @@ awful.rules.rules = {
   },
   floating("MPlayer"),
   floating("Git-gui"),
+  floating("Git-gui--askpass"),
   floating("Keepassx"),
   floating("File-roller"),
   floating("Gitk"),
