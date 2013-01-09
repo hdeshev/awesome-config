@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # remap caps lock to ctrl
 setxkbmap -option ctrl:nocaps
@@ -13,8 +13,11 @@ setxkbmap us,bg ,phonetic grp:toggle,grp_led:caps
 # Trackball-optimized
 xset m 8 1
 
+## DPMS monitor setting (standby -> suspend -> off) (seconds)
+xset dpms 300 600 900
+
 # make sure you run xscreensaver (with splash) and configure it first
-xscreensaver -no-splash &
+# xscreensaver -no-splash &
 
 if [ "$(pidof keepassx)" ]
 then
@@ -23,8 +26,8 @@ else
   keepassx /home/hristo/.keepassx/deshev.kdb &
 fi
 
-#truecrypt --auto-mount=favorites &
-~/bin/mount-private.sh
+# mount ~/private
+~/bin/mount-private.sh &
 
 # set up SSH agent with proper keys
 source ~/.bashfiles/ssh-agent.sh
@@ -40,17 +43,11 @@ else
   parcellite &
 fi
 
-#Thunar in daemon mode
-#if [ "$(pidof thunar)" ]
-#then
-#  echo "thunar already running"
-#else
-#    # Trigger a gvfs network update before starting Thunar. Fixes slow startups after that.
-#    gvfs-ls network: && thunar --daemon &
-#    #thunar --daemon &
-#fi
-
 # Workaround to make Java GUI apps work see:
 # http://awesome.naquadah.org/wiki/Problems_with_Java
 # You need `wmname` - Arch package: wmname; Ubuntu package: suckless-tools
 wmname LG3D
+
+HOST=$(hostname)
+SCRIPT_DIR=$(dirname $(readlink -f "$0"))
+source $SCRIPT_DIR/hosts/$HOST.sh
