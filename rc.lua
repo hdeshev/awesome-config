@@ -195,32 +195,34 @@ global_keys = awful.util.table.join(
   awful.key({ modkey, }, "Right",  awful.tag.viewnext       ),
   awful.key({ modkey, }, "Escape", awful.tag.history.restore),
 
-  awful.key({ modkey, }, "j", function ()
+  -- index-based focus (next/previous window)
+  awful.key({ modkey, }, "n", function ()
     awful.client.focus.byidx(1)
     if client.focus then client.focus:raise() end
   end),
-  awful.key({ modkey, }, "k", function ()
+  awful.key({ modkey, }, "p", function ()
     awful.client.focus.byidx(-1)
     if client.focus then client.focus:raise() end
   end),
 
-  -- direction-based focus doesn't work too well with maximized/minimized windows
-  --awful.key({ modkey, }, "h", function ()
-    --awful.client.focus.bydirection("left")
-    --if client.focus then client.focus:raise() end
-  --end),
-  --awful.key({ modkey, }, "j", function ()
-    --awful.client.focus.bydirection("down")
-    --if client.focus then client.focus:raise() end
-  --end),
-  --awful.key({ modkey, }, "k", function ()
-    --awful.client.focus.bydirection("up")
-    --if client.focus then client.focus:raise() end
-  --end),
-  --awful.key({ modkey, }, "l", function ()
-    --awful.client.focus.bydirection("right")
-    --if client.focus then client.focus:raise() end
-  --end),
+  -- direction-based focus: left/down/up/right using Vim's hjkl keys
+  -- doesn't work too well with maximized/minimized windows
+  awful.key({ modkey, }, "h", function ()
+    awful.client.focus.bydirection("left")
+    if client.focus then client.focus:raise() end
+  end),
+  awful.key({ modkey, }, "j", function ()
+    awful.client.focus.bydirection("down")
+    if client.focus then client.focus:raise() end
+  end),
+  awful.key({ modkey, }, "k", function ()
+    awful.client.focus.bydirection("up")
+    if client.focus then client.focus:raise() end
+  end),
+  awful.key({ modkey, }, "l", function ()
+    awful.client.focus.bydirection("right")
+    if client.focus then client.focus:raise() end
+  end),
 
   -- Layout manipulation
   awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
@@ -267,7 +269,8 @@ client_keys = awful.util.table.join(
   awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
   awful.key({ modkey, },           "o",      awful.client.movetoscreen                        ),
   awful.key({ modkey, "Shift" },   "r",      function (c) c:redraw()                       end),
-  awful.key({ modkey, },           "n",      function (c) c.minimized = not c.minimized    end),
+  -- Chuck Norris doesn't minimize windows!
+  --awful.key({ modkey, },           "n",      function (c) c.minimized = not c.minimized    end),
   awful.key({ modkey, },           "m",      function (c)
     c.maximized_horizontal = not c.maximized_horizontal
     c.maximized_vertical   = not c.maximized_vertical
