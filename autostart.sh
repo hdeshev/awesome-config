@@ -43,6 +43,14 @@ else
   parcellite &
 fi
 
+#per-window kbd layout selection
+if [ "$(pidof kbdd)" ]
+then
+  echo "kbdd already running"
+else
+  ~/bin/kbdd
+fi
+
 # Workaround to make Java GUI apps work see:
 # http://awesome.naquadah.org/wiki/Problems_with_Java
 # You need `wmname` - Arch package: wmname; Ubuntu package: suckless-tools
