@@ -17,7 +17,7 @@ xset m 8 1
 xset dpms 300 600 900
 
 # make sure you run xscreensaver (with splash) and configure it first
-# xscreensaver -no-splash &
+xscreensaver -no-splash &
 
 if [ "$(pidof keepassx)" ]
 then
