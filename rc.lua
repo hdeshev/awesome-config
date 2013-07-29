@@ -77,7 +77,7 @@ function colorize(color, string)
 end
 
 -- Textclock widget
-text_clock = awful.widget.textclock({ align = "right" })
+text_clock = awful.widget.textclock()
 
 --- RAM ---
 -- mem_widget = widget({ type = "textbox" })
@@ -90,7 +90,7 @@ text_clock = awful.widget.textclock({ align = "right" })
 
 -- Separator
 separator = wibox.widget.textbox()
-separator:set_text('<span color="#ee1111"> :: </span>')
+separator:set_markup('<span color="#ee1111"> :: </span>')
 
 -- Create a systray
 systray = wibox.widget.systray()
