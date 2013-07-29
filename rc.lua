@@ -154,7 +154,6 @@ for s = 1, screen.count() do
   ))
 
   -- Create a taglist widget
-  -- taglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, taglist.buttons)
   my_taglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, my_taglist.buttons)
 
   -- Create a tasklist widget
@@ -185,28 +184,6 @@ for s = 1, screen.count() do
   layout:set_right(right_layout)
 
   my_wibox[s]:set_widget(layout)
-
-  -- Add widgets to the wibox - order matters
-  -- my_wibox[s].widgets = {
-  --   {
-  --     launcher,
-  --     my_taglist[s],
-  --     prompt_box[s]
-
-  --     -- layout = awful.widget.layout.horizontal.leftright
-  --   },
-  --   layout_box[s],
-  --   text_clock,
-  --   separator,
-  --   s == 1 and systray or nil,
-  --   separator,
-  --   cpu_widget,
-  --   mem_widget,
-  --   separator,
-  --   tasklist[s]
-
-  --   -- layout = awful.widget.layout.horizontal.rightleft
-  -- }
 end
 
 -- Mouse bindings
