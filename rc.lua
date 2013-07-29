@@ -2,12 +2,14 @@
 local awful = require("awful")
 awful.rules = require("awful.rules")
 awful.autofocus = require("awful.autofocus")
+local awesome = require("awesome")
+local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 
-local vicious = require("vicious")
+-- local vicious = require("vicious")
 
 function trim(s)
   return (string.gsub(s, "^%s*(.-)%s*$", "%1"))
@@ -18,7 +20,7 @@ function eprint(message)
 end
 
 local hostname = trim(awful.util.pread("hostname"))
-local terminal = "x-terminal-emulator"
+local terminal = "lxterminal"
 
 -- Variable definitions
 local spawn      = awful.util.spawn
@@ -66,7 +68,7 @@ main_menu = awful.menu({ items = {
                                     { "open terminal", terminal }
                                   }})
 
-launcher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
+launcher = awful.widget.launcher({ image = awesome.load_image(beautiful.awesome_icon),
                                      menu = main_menu })
 -- }}}
 
@@ -78,27 +80,27 @@ end
 text_clock = awful.widget.textclock({ align = "right" })
 
 --- RAM ---
-mem_widget = widget({ type = "textbox" })
-vicious.register(mem_widget, vicious.widgets.mem, "$1% RAM |", 13)
+-- mem_widget = widget({ type = "textbox" })
+-- vicious.register(mem_widget, vicious.widgets.mem, "$1% RAM |", 13)
 
 
 --- CPU ---
-cpu_widget = widget({ type = "textbox" })
-vicious.register(cpu_widget, vicious.widgets.cpu, "$1% CPU |") 
+-- cpu_widget = widget({ type = "textbox" })
+-- vicious.register(cpu_widget, vicious.widgets.cpu, "$1% CPU |") 
 
 -- Separator
-separator = widget { type = "textbox" }
-separator.text = '<span color="#ee1111"> :: </span>'
+separator = wibox.widget.textbox()
+separator:set_text('<span color="#ee1111"> :: </span>')
 
 -- Create a systray
-systray = widget({ type = "systray" })
+systray = wibox.widget.systray()
 
 -- Create a wibox for each screen and add it
-wibox = {}
+my_wibox = {}
 prompt_box = {}
 layout_box = {}
-taglist = {}
-taglist.buttons = awful.util.table.join(
+my_taglist = {}
+my_taglist.buttons = awful.util.table.join(
   awful.button({ },        1, awful.tag.viewonly),
   awful.button({ modkey }, 1, awful.client.movetotag),
   awful.button({ },        3, awful.tag.viewtoggle),
@@ -139,7 +141,8 @@ tasklist.buttons = awful.util.table.join(
 
 for s = 1, screen.count() do
   -- Create a promptbox for each screen
-  prompt_box[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
+  --prompt_box[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
+  prompt_box[s] = awful.widget.prompt({})
 
   -- Image box with the layout we're using
   layout_box[s] = awful.widget.layoutbox(s)
@@ -151,37 +154,59 @@ for s = 1, screen.count() do
   ))
 
   -- Create a taglist widget
-  taglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, taglist.buttons)
+  -- taglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, taglist.buttons)
+  my_taglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, my_taglist.buttons)
 
   -- Create a tasklist widget
-  tasklist[s] = awful.widget.tasklist(function(c)
-    return awful.widget.tasklist.label.currenttags(c, s)
-  end, tasklist.buttons)
+  tasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.widget.tasklist.buttons)
 
   -- Create the wibox
-  wibox[s] = awful.wibox({ position = "top", screen = s })
+  my_wibox[s] = awful.wibox({ position = "top", screen = s })
+
+  -- Widgets that are aligned to the left
+  local left_layout = wibox.layout.fixed.horizontal()
+  left_layout:add(my_taglist[s])
+
+  -- Widgets that are aligned to the right
+  local right_layout = wibox.layout.fixed.horizontal()
+  right_layout:add(separator)
+  -- right_layout:add(mem_widget)
+  -- right_layout:add(cpu_widget)
+  right_layout:add(separator)
+  if s == 1 then right_layout:add(wibox.widget.systray()) end
+  right_layout:add(separator)
+  right_layout:add(text_clock)
+  right_layout:add(layout_box[s])
+
+  -- Now bring it all together (with the tasklist in the middle)
+  local layout = wibox.layout.align.horizontal()
+  layout:set_left(left_layout)
+  layout:set_middle(tasklist[s])
+  layout:set_right(right_layout)
+
+  my_wibox[s]:set_widget(layout)
 
   -- Add widgets to the wibox - order matters
-  wibox[s].widgets = {
-    {
-      launcher,
-      taglist[s],
-      prompt_box[s],
+  -- my_wibox[s].widgets = {
+  --   {
+  --     launcher,
+  --     my_taglist[s],
+  --     prompt_box[s]
 
-      layout = awful.widget.layout.horizontal.leftright
-    },
-    layout_box[s],
-    text_clock,
-    separator,
-    s == 1 and systray or nil,
-    separator,
-    cpu_widget,
-    mem_widget,
-    separator,
-    tasklist[s],
+  --     -- layout = awful.widget.layout.horizontal.leftright
+  --   },
+  --   layout_box[s],
+  --   text_clock,
+  --   separator,
+  --   s == 1 and systray or nil,
+  --   separator,
+  --   cpu_widget,
+  --   mem_widget,
+  --   separator,
+  --   tasklist[s]
 
-    layout = awful.widget.layout.horizontal.rightleft
-  }
+  --   -- layout = awful.widget.layout.horizontal.rightleft
+  -- }
 end
 
 -- Mouse bindings
@@ -412,7 +437,7 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 awful.util.spawn(home .. "/.config/awesome/autostart.sh", false)
 
 -- Increase font size and use a more readable font for notification popups.
-naughty.config.default_preset.font             = "Ubuntu Mono 24"
+naughty.config.presets.font             = "DejaVu Sans Mono 24"
 
 -- Go to first tag after done initializing.
 local screen = mouse.screen
