@@ -9,7 +9,7 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 
--- local vicious = require("vicious")
+local vicious = require("vicious")
 
 function trim(s)
   return (string.gsub(s, "^%s*(.-)%s*$", "%1"))
@@ -80,13 +80,13 @@ end
 text_clock = awful.widget.textclock()
 
 --- RAM ---
--- mem_widget = widget({ type = "textbox" })
--- vicious.register(mem_widget, vicious.widgets.mem, "$1% RAM |", 13)
+mem_widget = wibox.widget.textbox()
+vicious.register(mem_widget, vicious.widgets.mem, "$1% RAM |", 13)
 
 
 --- CPU ---
--- cpu_widget = widget({ type = "textbox" })
--- vicious.register(cpu_widget, vicious.widgets.cpu, "$1% CPU |") 
+cpu_widget = wibox.widget.textbox()
+vicious.register(cpu_widget, vicious.widgets.cpu, "$1% CPU |") 
 
 -- Separator
 separator = wibox.widget.textbox()
@@ -170,8 +170,8 @@ for s = 1, screen.count() do
   -- Widgets that are aligned to the right
   local right_layout = wibox.layout.fixed.horizontal()
   right_layout:add(separator)
-  -- right_layout:add(mem_widget)
-  -- right_layout:add(cpu_widget)
+  right_layout:add(mem_widget)
+  right_layout:add(cpu_widget)
   right_layout:add(separator)
   if s == 1 then right_layout:add(wibox.widget.systray()) end
   right_layout:add(separator)
