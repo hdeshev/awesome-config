@@ -90,8 +90,7 @@ vicious.register(cpu_widget, vicious.widgets.cpu, " $1% CPU |")
 
 --- Volume ---
 volume_widget = wibox.widget.textbox()
-local master_volume = function() return vicious.widgets.volume(nil, "Master") end
-vicious.register(volume_widget, master_volume, " $1% ($2) |")
+vicious.register(volume_widget, vicious.widgets.volume, " $1% ($2) |", 2, "Master")
 
 -- Separator
 separator = wibox.widget.textbox()
