@@ -1,13 +1,13 @@
 #!/bin/sh
 
 # Load nvidia X settings
-nvidia-settings --load-config-only
+# nvidia-settings --load-config-only
 
 # Start the XFCE settings daemon to make GUI programs look good
-xfsettingsd --force
+# xfsettingsd --force
 
-# Ubuntu only.
-dropbox start -i &
+# Start dropbox daemon
+~/.dropbox-dist/dropboxd &
 
 # Network Manager applet - connect to various networks (eth, wlan)
 if [ "$(pidof nm-applet)" ]
@@ -18,10 +18,10 @@ else
 fi
 
 #VNC server - remote pair programming
-if [ "$(pidof vino-server)" ]
-then
-  echo "vino-server already running"
-else
-  /usr/lib/vino/vino-server &
-fi
+# if [ "$(pidof vino-server)" ]
+# then
+#   echo "vino-server already running"
+# else
+#   /usr/lib/vino/vino-server &
+# fi
 
