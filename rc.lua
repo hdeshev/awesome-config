@@ -352,9 +352,7 @@ end
 function centered(window_class)
   return {
     rule =       { class = window_class },
-    callback = function(c)
-      awful.placement.centered(c)
-    end
+    callback = awful.placement.centered
   }
 end
 
