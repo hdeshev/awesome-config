@@ -348,6 +348,15 @@ function no_size_hints(window_class)
     properties = { size_hints_honor = false },
   }
 end
+-- Center window on the screen
+function centered(window_class)
+  return {
+    rule =       { class = window_class },
+    callback = function(c)
+      awful.placement.centered(c)
+    end
+  }
+end
 
 -- Rules
 awful.rules.rules = {
@@ -397,7 +406,8 @@ awful.rules.rules = {
   {
     rule =       { class = "Deluge" },
     properties = { tag = tags[1][9] }
-  }
+  },
+  centered("Gmrun")
 }
 
 -- Signal function to execute when a new client appears.
