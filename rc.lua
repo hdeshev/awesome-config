@@ -249,22 +249,22 @@ global_keys = awful.util.table.join(
   awful.key({ modkey, "Shift" },           "h",     function () awful.tag.incmwfact(-0.05)    end),
 
   -- sound & brightness
-  awful.key({}, "XF86AudioPlay", function () spawn("mocp -G") end),
-  awful.key({}, "XF86AudioLowerVolume", function () spawn("amixer set Master 5%-") end),
-  awful.key({}, "XF86AudioRaiseVolume", function () spawn("amixer set Master 5%+") end),
-  awful.key({}, "XF86AudioMute", function () spawn("amixer set Master 1+ toggle") end),
-  awful.key({ modkey }, "F8", function () spawn("brightness down")                  end),
-  awful.key({ modkey }, "F9", function () spawn("brightness up")                    end),
+  awful.key({}, "XF86AudioPlay", function () spawn("mocp -G", false) end),
+  awful.key({}, "XF86AudioLowerVolume", function () spawn("amixer set Master 5%-", false) end),
+  awful.key({}, "XF86AudioRaiseVolume", function () spawn("amixer set Master 5%+", false) end),
+  awful.key({}, "XF86AudioMute", function () spawn("amixer set Master 1+ toggle", false) end),
+  awful.key({ modkey }, "F8", function () spawn("brightness down", false) end),
+  awful.key({ modkey }, "F9", function () spawn("brightness up", false) end),
 
   -- prompt
-  awful.key({ modkey          }, "r", function () spawn("gmrun")                end),
+  awful.key({ modkey          }, "r", function () spawn("gmrun", false)                end),
   -- awful.key({ modkey, "Shift" }, "r", function () prompt_box[mouse.screen]:run() end),
 
   -- applications
   awful.key({ modkey }, "e", function () spawn("pcmanfm", false) end),
 
   -- pixel-grabbing
-  awful.key({ modkey }, "F11", function () spawn("grabc 2>&1 | xclip -selection clip-board") end),
+  awful.key({ modkey }, "F11", function () spawn("grabc 2>&1 | xclip -selection clip-board", false) end),
 
   -- screengrabbing
   awful.key({ modkey }, "i", function () spawn(home .. "/bin/shoot", false) end)
@@ -426,7 +426,7 @@ end)
 client.connect_signal("focus",   function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
-awful.util.spawn(home .. "/.config/awesome/autostart.sh", false)
+spawn(home .. "/.config/awesome/autostart.sh", false)
 
 -- Increase font size and use a more readable font for notification popups.
 naughty.config.defaults.font             = "DejaVu Sans Mono 24"
