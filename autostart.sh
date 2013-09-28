@@ -29,9 +29,6 @@ fi
 # mount ~/private
 ~/bin/mount-private.sh &
 
-# set up SSH agent with proper keys
-source ~/.bashfiles/ssh-agent.sh
-
 #using feh to render the wallpaper
 eval `cat $HOME/.fehbg`
 
