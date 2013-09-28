@@ -68,7 +68,7 @@ main_menu = awful.menu({ items = {
                                     { "open terminal", terminal }
                                   }})
 
-launcher = awful.widget.launcher({ image = awesome.load_image(beautiful.awesome_icon),
+launcher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
                                      menu = main_menu })
 -- }}}
 
@@ -80,24 +80,24 @@ end
 text_clock = awful.widget.textclock()
 
 --- RAM ---
-mem_widget = wibox.widget.textbox()
+mem_widget = widget({ type = "textbox" })
 vicious.register(mem_widget, vicious.widgets.mem, " $1% RAM |", 13)
 
 
 --- CPU ---
-cpu_widget = wibox.widget.textbox()
+cpu_widget = widget({ type = "textbox" })
 vicious.register(cpu_widget, vicious.widgets.cpu, " $1% CPU |")
 
 --- Volume ---
-volume_widget = wibox.widget.textbox()
+volume_widget = widget({ type = "textbox" })
 vicious.register(volume_widget, vicious.widgets.volume, " $1% ($2) |", 2, "Master")
 
 -- Separator
-separator = wibox.widget.textbox()
-separator:set_markup('<span color="#ee1111"> :: </span>')
+separator = widget { type = "textbox" }
+separator.text = '<span color="#ee1111"> :: </span>'
 
 -- Create a systray
-systray = wibox.widget.systray()
+systray = widget({ type = "systray" })
 
 -- Create a wibox for each screen and add it
 my_wibox = {}
@@ -145,8 +145,7 @@ tasklist.buttons = awful.util.table.join(
 
 for s = 1, screen.count() do
   -- Create a promptbox for each screen
-  --prompt_box[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
-  prompt_box[s] = awful.widget.prompt({})
+  prompt_box[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
 
   -- Image box with the layout we're using
   layout_box[s] = awful.widget.layoutbox(s)
@@ -158,37 +157,37 @@ for s = 1, screen.count() do
   ))
 
   -- Create a taglist widget
-  my_taglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, my_taglist.buttons)
+  my_taglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, my_taglist.buttons)
 
   -- Create a tasklist widget
-  tasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist.buttons)
+  tasklist[s] = awful.widget.tasklist(function(c)
+    return awful.widget.tasklist.label.currenttags(c, s)
+  end, tasklist.buttons)
 
   -- Create the wibox
   my_wibox[s] = awful.wibox({ position = "top", screen = s })
 
-  -- Widgets that are aligned to the left
-  local left_layout = wibox.layout.fixed.horizontal()
-  left_layout:add(my_taglist[s])
+ -- Add widgets to the wibox - order matters
+  my_wibox[s].widgets = {
+    {
+      launcher,
+      my_taglist[s],
+      prompt_box[s],
 
-  -- Widgets that are aligned to the right
-  local right_layout = wibox.layout.fixed.horizontal()
-  right_layout:add(separator)
-  right_layout:add(mem_widget)
-  right_layout:add(cpu_widget)
-  right_layout:add(volume_widget)
-  right_layout:add(separator)
-  if s == 1 then right_layout:add(wibox.widget.systray()) end
-  right_layout:add(separator)
-  right_layout:add(text_clock)
-  right_layout:add(layout_box[s])
+      layout = awful.widget.layout.horizontal.leftright
+    },
+    layout_box[s],
+    text_clock,
+    separator,
+    s == 1 and systray or nil,
+    separator,
+    cpu_widget,
+    mem_widget,
+    separator,
+    tasklist[s],
 
-  -- Now bring it all together (with the tasklist in the middle)
-  local layout = wibox.layout.align.horizontal()
-  layout:set_left(left_layout)
-  layout:set_middle(tasklist[s])
-  layout:set_right(right_layout)
-
-  my_wibox[s]:set_widget(layout)
+    layout = awful.widget.layout.horizontal.rightleft
+  }
 end
 
 -- Mouse bindings
@@ -413,7 +412,7 @@ awful.rules.rules = {
 }
 
 -- Signal function to execute when a new client appears.
-client.connect_signal("manage", function (c, startup)
+client.add_signal("manage", function (c, startup)
   if not startup then
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
@@ -427,13 +426,13 @@ client.connect_signal("manage", function (c, startup)
   end
 end)
 
-client.connect_signal("focus",   function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.add_signal("focus",   function(c) c.border_color = beautiful.border_focus end)
+client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 spawn(home .. "/.config/awesome/autostart.sh", false)
 
 -- Increase font size and use a more readable font for notification popups.
-naughty.config.defaults.font             = "DejaVu Sans Mono 24"
+naughty.config.default_preset.font             = "DejaVu Sans Mono 24"
 
 -- Go to first tag after done initializing.
 local screen = mouse.screen
