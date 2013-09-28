@@ -1,10 +1,13 @@
 #!/bin/sh
 
 # Load nvidia X settings
-# nvidia-settings --load-config-only
+nvidia-settings --load-config-only
 
 # Start the XFCE settings daemon to make GUI programs look good
-# xfsettingsd --force
+xfsettingsd --replace
+
+# Gnome keyring daemon
+gnome-keyring-daemon --daemonize --login
 
 # Start dropbox daemon
 ~/.dropbox-dist/dropboxd &
