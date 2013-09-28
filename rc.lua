@@ -385,7 +385,6 @@ awful.rules.rules = {
   floating("Toplevel"),
   no_size_hints("Xfce4-terminal"),
   no_size_hints("Gnome-terminal"),
-  no_size_hints("Roxterm"),
   no_size_hints("Lxterminal"),
   no_size_hints("X-terminal-emulator"),
   no_size_hints("Gvim"),
@@ -412,6 +411,15 @@ awful.rules.rules = {
   centered("Gmrun")
 }
 
+-- Some Roxterm versions detect they are using the entire screen and set the maximized state.
+-- That breaks window stacking.
+function fix_roxterm(client)
+    if client.class == "Roxterm" then
+      client.maximized_horizontal = false
+      client.maximized_vertical = false
+    end
+end
+
 -- Signal function to execute when a new client appears.
 client.add_signal("manage", function (c, startup)
   if not startup then
@@ -424,6 +432,8 @@ client.add_signal("manage", function (c, startup)
       awful.placement.no_overlap(c)
       awful.placement.no_offscreen(c)
     end
+
+    fix_roxterm(c)
   end
 end)
 
