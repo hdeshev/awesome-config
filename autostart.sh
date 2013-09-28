@@ -45,7 +45,7 @@ if [ "$(pidof kbdd)" ]
 then
   echo "kbdd already running"
 else
-  ~/bin/kbdd
+  kbdd
 fi
 
 # Workaround to make Java GUI apps work see:
