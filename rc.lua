@@ -181,6 +181,7 @@ for s = 1, screen.count() do
     separator,
     s == 1 and systray or nil,
     separator,
+    volume_widget,
     cpu_widget,
     mem_widget,
     separator,
