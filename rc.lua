@@ -20,7 +20,7 @@ function eprint(message)
 end
 
 local hostname = trim(awful.util.pread("hostname"))
-local terminal = "roxterm"
+local terminal = "xfce4-terminal"
 
 -- Variable definitions
 local spawn      = awful.util.spawn
