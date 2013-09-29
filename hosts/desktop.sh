@@ -10,7 +10,10 @@ xfsettingsd --replace
 gnome-keyring-daemon --daemonize --login
 
 # Start dropbox daemon
-~/.dropbox-dist/dropboxd &
+# ~/.dropbox-dist/dropboxd &
+
+# Ubuntu only.
+dropbox start -i &
 
 # Network Manager applet - connect to various networks (eth, wlan)
 if [ "$(pidof nm-applet)" ]
