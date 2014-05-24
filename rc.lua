@@ -408,6 +408,10 @@ awful.rules.rules = {
     rule =       { class = "Deluge" },
     properties = { tag = tags[1][9] }
   },
+  {
+    rule =       { class = "Psyncgui" },
+    properties = { tag = tags[1][9] }
+  },
   centered("Gmrun")
 }
 

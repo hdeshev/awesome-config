@@ -12,8 +12,8 @@ gnome-keyring-daemon --daemonize --login
 # Start dropbox daemon
 # ~/.dropbox-dist/dropboxd &
 
-# Ubuntu only.
-dropbox start -i &
+# Start the pCloud Sync client using our own wrapper script
+~/bin/pclsync
 
 # Network Manager applet - connect to various networks (eth, wlan)
 if [ "$(pidof nm-applet)" ]
