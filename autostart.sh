@@ -19,6 +19,9 @@ xset dpms 300 600 900
 # make sure you run xscreensaver (with splash) and configure it first
 xscreensaver -no-splash &
 
+# Composition manager. Not really into those, but it works around a Chrome redraw bug.
+compton &
+
 if [ "$(pidof keepassx)" ]
 then
   echo "keepassx already running"
