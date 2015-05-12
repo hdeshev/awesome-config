@@ -242,6 +242,15 @@ global_keys = awful.util.table.join(
     end
   end),
 
+  -- Go to next screen
+  awful.key({ modkey },           "o",      function ()
+    local direction = 1
+    if mouse.screen == screen.count() then
+      direction = -1
+    end
+    awful.screen.focus_relative(direction)
+  end),
+
   -- Standard program
   awful.key({ modkey, },           "Return", function () spawn(terminal) end),
 
@@ -261,7 +270,7 @@ global_keys = awful.util.table.join(
   awful.key({ modkey }, "F9", function () spawn("brightness up", false) end),
 
   -- prompt
-  awful.key({ modkey          }, "r", function () spawn("gmrun", false)                end),
+  awful.key({ modkey }, "r", function () spawn("gmrun", false)                end),
   -- awful.key({ modkey, "Shift" }, "r", function () prompt_box[mouse.screen]:run() end),
 
   -- applications
@@ -279,13 +288,6 @@ client_keys = awful.util.table.join(
   awful.key({ modkey },            "w",      function (c) c:kill()                         end),
   -- awful.key({ modkey, },           "t",      awful.client.floating.toggle                     ),
   awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-  awful.key({ modkey, },           "o",      function (c)
-    local direction = 1
-    if c.screen == screen.count() then
-      direction = -1
-    end
-    awful.screen.focus_relative(direction)
-  end),
   awful.key({ modkey, "Shift" },           "o",      function (c)
     awful.client.movetoscreen(c)
     c:raise()
