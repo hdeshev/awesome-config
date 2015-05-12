@@ -279,7 +279,17 @@ client_keys = awful.util.table.join(
   awful.key({ modkey },            "w",      function (c) c:kill()                         end),
   -- awful.key({ modkey, },           "t",      awful.client.floating.toggle                     ),
   awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-  awful.key({ modkey, },           "o",      awful.client.movetoscreen                        ),
+  awful.key({ modkey, },           "o",      function (c)
+    local direction = 1
+    if c.screen == screen.count() then
+      direction = -1
+    end
+    awful.screen.focus_relative(direction)
+  end),
+  awful.key({ modkey, "Shift" },           "o",      function (c)
+    awful.client.movetoscreen(c)
+    c:raise()
+  end),
   awful.key({ modkey, "Shift" },   "r",      function (c) c:redraw()                       end),
   -- Chuck Norris doesn't minimize windows!
   --awful.key({ modkey, },           "n",      function (c) c.minimized = not c.minimized    end),
