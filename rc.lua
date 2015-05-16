@@ -50,16 +50,20 @@ function merge(target, offset, tags)
   end
 end
 
-tags = {}
-for s = 1, screen.count() do
-  screen_tags = {}
-
-  -- different tags have different layouts
-  merge(screen_tags, 0, awful.tag.new({ 1, 2, 3, 4, 5, 6, 7 }, s, awful.layout.suit.tile.left))
-  merge(screen_tags, 7, awful.tag.new({ 8, 9 }, s, awful.layout.suit.floating))
-
-  tags[s] = screen_tags
+-- Tags 1-4 go on the first screen. 5-9 -- on the second.
+-- If we have only one screen, everything goes there
+SCREEN_1 = 1
+SCREEN_2 = 1
+if screen.count() > 1 then
+  SCREEN_2 = 2
 end
+
+tags = {}
+
+-- different tags have different layouts
+merge(tags, 0, awful.tag.new({ 1, 2, 3, 4 }, SCREEN_1, awful.layout.suit.tile.left))
+merge(tags, 4, awful.tag.new({ 5, 6, 7 }, SCREEN_2, awful.layout.suit.tile.left))
+merge(tags, 7, awful.tag.new({ 8, 9 }, SCREEN_2, awful.layout.suit.floating))
 
 main_menu = awful.menu({ items = { 
                                     -- { "Debian", debian.menu.Debian_menu.Debian },
@@ -305,38 +309,29 @@ client_keys = awful.util.table.join(
 )
 
 -- Compute the maximum number of digit we need, limited to 9
-keynumber = 0
-for s = 1, screen.count() do
-  keynumber = math.min(9, math.max(#tags[s], keynumber));
-end
+last_tag = 9
 
 -- Bind all key numbers to tags.
-for i = 1, keynumber do
+for i = 1, last_tag do
   global_keys = awful.util.table.join(
     global_keys,
     awful.key({ modkey }, "#" .. i + 9, function ()
-      local screen = mouse.screen
-      if tags[screen][i] then
-        awful.tag.viewonly(tags[screen][i])
-      end
+      awful.tag.viewonly(tags[i])
     end),
 
     awful.key({ modkey, "Control" }, "#" .. i + 9, function ()
-      local screen = mouse.screen
-      if tags[screen][i] then
-        awful.tag.viewtoggle(tags[screen][i])
-      end
+      awful.tag.viewtoggle(tags[i])
     end),
 
     awful.key({ modkey, "Shift" }, "#" .. i + 9, function ()
-      if client.focus and tags[client.focus.screen][i] then
-        awful.client.movetotag(tags[client.focus.screen][i])
+      if client.focus then
+        awful.client.movetotag(tags[i])
       end
     end),
 
     awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9, function ()
-      if client.focus and tags[client.focus.screen][i] then
-        awful.client.toggletag(tags[client.focus.screen][i])
+      if client.focus then
+        awful.client.toggletag(tags[i])
       end
     end)
   )
@@ -402,27 +397,27 @@ awful.rules.rules = {
   no_size_hints("Gvim"),
   {
     rule =       { class = "Thunderbird" },
-    properties = { tag = tags[1][7] }
+    properties = { tag = tags[7] }
   },
   {
     rule =       { class = "Skype" },
-    properties = { tag = tags[1][8], floating = true }
+    properties = { tag = tags[8], floating = true }
   },
   {
     rule =       { class = "Pidgin" },
-    properties = { tag = tags[1][8], floating = true }
+    properties = { tag = tags[8], floating = true }
   },
   {
     rule =       { class = "Audacious" },
-    properties = { tag = tags[1][9], floating = true }
+    properties = { tag = tags[9], floating = true }
   },
   {
     rule =       { class = "Deluge" },
-    properties = { tag = tags[1][9] }
+    properties = { tag = tags[9] }
   },
   {
     rule =       { class = "Psyncgui" },
-    properties = { tag = tags[1][9] }
+    properties = { tag = tags[9] }
   },
   centered("Gmrun")
 }
@@ -463,6 +458,6 @@ naughty.config.default_preset.font             = "DejaVu Sans Mono 24"
 
 -- Go to first tag after done initializing.
 local screen = mouse.screen
-if tags[screen][1] then
-  awful.tag.viewonly(tags[screen][1])
+if tags[1] then
+  awful.tag.viewonly(tags[1])
 end
