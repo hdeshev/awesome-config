@@ -308,7 +308,6 @@ client_keys = awful.util.table.join(
   end)
 )
 
--- Compute the maximum number of digit we need, limited to 9
 last_tag = 9
 
 -- Bind all key numbers to tags.
