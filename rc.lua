@@ -58,6 +58,14 @@ if screen.count() > 1 then
   SCREEN_2 = 2
 end
 
+function screen_for_tag(tag_index)
+  if tag_index <= 4 then
+    return SCREEN_1
+  else
+    return SCREEN_2
+  end
+end
+
 tags = {}
 
 -- different tags have different layouts
@@ -315,21 +323,25 @@ for i = 1, last_tag do
   global_keys = awful.util.table.join(
     global_keys,
     awful.key({ modkey }, "#" .. i + 9, function ()
+      awful.screen.focus(screen_for_tag(i))
       awful.tag.viewonly(tags[i])
     end),
 
     awful.key({ modkey, "Control" }, "#" .. i + 9, function ()
+      awful.screen.focus(screen_for_tag(i))
       awful.tag.viewtoggle(tags[i])
     end),
 
     awful.key({ modkey, "Shift" }, "#" .. i + 9, function ()
       if client.focus then
+        awful.screen.focus(screen_for_tag(i))
         awful.client.movetotag(tags[i])
       end
     end),
 
     awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9, function ()
       if client.focus then
+        awful.screen.focus(screen_for_tag(i))
         awful.client.toggletag(tags[i])
       end
     end)
