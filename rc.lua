@@ -32,6 +32,12 @@ local editor     = os.getenv("EDITOR") or "vim"
 
 local editor_cmd = terminal .. " -e " .. editor
 
+local monitor_config_script = home .. "/.screenlayout/2monitors.sh"
+if awful.util.file_readable(monitor_config_script) then
+  -- use pread to force waiting for child process to complete
+  awful.util.pread(monitor_config_script)
+end
+
 -- Initialize theme
 beautiful.init(home .. "/.config/awesome/theme.lua")
 

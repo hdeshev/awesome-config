@@ -30,6 +30,3 @@ fi
 # else
 #   /usr/lib/vino/vino-server &
 # fi
-
-# Apply arandr-generated config
-~/.screenlayout/2monitors.sh
