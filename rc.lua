@@ -78,6 +78,7 @@ tags = {}
 merge(tags, 0, awful.tag.new({ 1, 2, 3, 4 }, SCREEN_1, awful.layout.suit.tile.left))
 merge(tags, 4, awful.tag.new({ 5, 6, 7 }, SCREEN_2, awful.layout.suit.tile.left))
 merge(tags, 7, awful.tag.new({ 8, 9 }, SCREEN_2, awful.layout.suit.floating))
+merge(tags, 9, awful.tag.new({ "B" }, SCREEN_1, awful.layout.suit.tile.left))
 
 main_menu = awful.menu({ items = { 
                                     -- { "Debian", debian.menu.Debian_menu.Debian },
@@ -311,7 +312,7 @@ client_keys = awful.util.table.join(
     c:raise()
   end),
   awful.key({ modkey, "Shift" },   "r",      function (c) c:redraw()                       end),
-  -- Chuck Norris doesn't minimize windows!
+  -- Never minimize windows!
   --awful.key({ modkey, },           "n",      function (c) c.minimized = not c.minimized    end),
   awful.key({ modkey, },           "m",      function (c)
     c.maximized_horizontal = not c.maximized_horizontal
@@ -322,33 +323,44 @@ client_keys = awful.util.table.join(
   end)
 )
 
-last_tag = 9
+last_tag = 10
 
 -- Bind all key numbers to tags.
 for i = 1, last_tag do
+  -- map numeric key (1-9) with codes 10-19 to tags 2-10 (which really look like 1-9)
+  -- first tag is our special backtick tag
+  local tag_key = ""
+  if i < 10 then
+      tag_key = "#" .. i + 9
+  else
+      tag_key = "#49" -- backtick/tilde key used for last tag
+  end
+
+  local current_tag = tags[i]
+
   global_keys = awful.util.table.join(
     global_keys,
-    awful.key({ modkey }, "#" .. i + 9, function ()
+    awful.key({ modkey }, tag_key, function ()
       awful.screen.focus(screen_for_tag(i))
-      awful.tag.viewonly(tags[i])
+      awful.tag.viewonly(current_tag)
     end),
 
-    awful.key({ modkey, "Control" }, "#" .. i + 9, function ()
+    awful.key({ modkey, "Control" }, tag_key, function ()
       awful.screen.focus(screen_for_tag(i))
-      awful.tag.viewtoggle(tags[i])
+      awful.tag.viewtoggle(current_tag)
     end),
 
-    awful.key({ modkey, "Shift" }, "#" .. i + 9, function ()
+    awful.key({ modkey, "Shift" }, tag_key, function ()
       if client.focus then
         awful.screen.focus(screen_for_tag(i))
-        awful.client.movetotag(tags[i])
+        awful.client.movetotag(current_tag)
       end
     end),
 
-    awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9, function ()
+    awful.key({ modkey, "Control", "Shift" }, tag_key, function ()
       if client.focus then
         awful.screen.focus(screen_for_tag(i))
-        awful.client.toggletag(tags[i])
+        awful.client.toggletag(current_tag)
       end
     end)
   )
