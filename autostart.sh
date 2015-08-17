@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source ~/.bashfiles/gnome-keyring.sh
+# source ~/.bashfiles/gnome-keyring.sh
+
 # remap caps lock to ctrl
 setxkbmap -option ctrl:nocaps
 # right Win key is my Compose key

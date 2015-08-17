@@ -7,7 +7,7 @@
 xfsettingsd --replace
 
 # Gnome keyring daemon
-gnome-keyring-daemon --daemonize --login
+# gnome-keyring-daemon --daemonize --login
 
 # Start dropbox daemon
 # ~/.dropbox-dist/dropboxd &
