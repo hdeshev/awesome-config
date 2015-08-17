@@ -75,10 +75,10 @@ end
 tags = {}
 
 -- different tags have different layouts
-merge(tags, 0, awful.tag.new({ 1, 2, 3, 4 }, SCREEN_1, awful.layout.suit.tile.left))
-merge(tags, 4, awful.tag.new({ 5, 6, 7 }, SCREEN_2, awful.layout.suit.tile.left))
+merge(tags, 0, awful.tag.new({ 1, 2, 3, 4, 5 }, SCREEN_1, awful.layout.suit.tile.left))
+merge(tags, 5, awful.tag.new({ 6, 7 }, SCREEN_2, awful.layout.suit.tile.left))
 merge(tags, 7, awful.tag.new({ 8, 9 }, SCREEN_2, awful.layout.suit.floating))
-merge(tags, 9, awful.tag.new({ "B" }, SCREEN_1, awful.layout.suit.tile.left))
+merge(tags, 9, awful.tag.new({ "B" }, SCREEN_2, awful.layout.suit.tile.left))
 
 main_menu = awful.menu({ items = { 
                                     -- { "Debian", debian.menu.Debian_menu.Debian },
