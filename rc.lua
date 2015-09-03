@@ -65,7 +65,7 @@ if screen.count() > 1 then
 end
 
 function screen_for_tag(tag_index)
-  if tag_index <= 4 then
+  if tag_index <= 5 then
     return SCREEN_1
   else
     return SCREEN_2
