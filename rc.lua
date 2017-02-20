@@ -96,7 +96,7 @@ function colorize(color, string)
 end
 
 -- Textclock widget
-text_clock = awful.widget.textclock()
+--text_clock = awful.widget.textclock()
 
 --- RAM ---
 mem_widget = widget({ type = "textbox" })
@@ -196,7 +196,7 @@ for s = 1, screen.count() do
       layout = awful.widget.layout.horizontal.leftright
     },
     layout_box[s],
-    text_clock,
+    --text_clock,
     separator,
     s == 1 and systray or nil,
     separator,
@@ -294,6 +294,7 @@ global_keys = awful.util.table.join(
 
   -- applications
   awful.key({ modkey }, "e", function () spawn("pcmanfm", false) end),
+  awful.key({ modkey, "Control" }, "l", function () spawn("xscreensaver-command -lock", false) end),
 
   -- pixel-grabbing
   awful.key({ modkey }, "F11", function () spawn("grabc 2>&1 | xclip -selection clip-board", false) end),
@@ -313,7 +314,7 @@ client_keys = awful.util.table.join(
   end),
   awful.key({ modkey, "Shift" },   "r",      function (c) c:redraw()                       end),
   -- Never minimize windows!
-  --awful.key({ modkey, },           "n",      function (c) c.minimized = not c.minimized    end),
+  awful.key({ modkey, "Shift" },           "n",      function (c) c.minimized = not c.minimized    end),
   awful.key({ modkey, },           "m",      function (c)
     c.maximized_horizontal = not c.maximized_horizontal
     c.maximized_vertical   = not c.maximized_vertical
