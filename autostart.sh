@@ -15,6 +15,10 @@ setxkbmap us,bg ,phonetic grp:toggle,grp_led:caps
 # Trackball-optimized
 xset m 8 1
 
+# Emulate 3 buttons (Kensington trackball)
+xinput set-prop "2" "Evdev Middle Button Emulation" 1
+xinput set-prop "2" "Evdev Middle Button Timeout" 100
+
 ## DPMS monitor setting (standby -> suspend -> off) (seconds)
 xset dpms 300 600 900
 
@@ -28,7 +32,7 @@ if [ "$(pidof keepassx)" ]
 then
   echo "keepassx already running"
 else
-  keepassx $HOME/.keepassx/deshev.kdb &
+  keepassx $HOME/.keepassx/deshev.kdbx &
 fi
 
 # mount ~/private
